@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3493806850057529706}
-  - component: {fileID: 8299169077100109335}
   - component: {fileID: 3108160030839001499}
   - component: {fileID: 6656527352108041348}
   - component: {fileID: 6678985397755982545}
@@ -17,8 +16,8 @@ GameObject:
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &3493806850057529706
 Transform:
@@ -35,19 +34,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8299169077100109335
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3379612517584872567}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df62b74e1eea3a7428cc8248678c7b51, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HP: 3
 --- !u!33 &3108160030839001499
 MeshFilter:
   m_ObjectHideFlags: 0
