@@ -5,6 +5,7 @@ using UnityEngine;
 public class Gun : MonoBehaviour
 {
 
+    [Header("----- Weapon Stats -----")]
     [SerializeField] int ammoCap;
     [SerializeField] int shootdist;
 

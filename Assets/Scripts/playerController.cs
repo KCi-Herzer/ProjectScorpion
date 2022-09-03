@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class playerController : MonoBehaviour
+public class playerController : MonoBehaviour, IDamageable
 {
     [SerializeField] CharacterController controller;
 
+    [Header("----- Player Stats -----")]
+    [SerializeField] int HP;
     [SerializeField] float playerSpeed;
-    [SerializeField] float jumpHeight;
     [SerializeField] float gravityValue;
-
+    [SerializeField] float jumpHeight;
     [SerializeField] int jumpsMax;
-
 
 
     int timesJumped;
@@ -48,5 +48,19 @@ public class playerController : MonoBehaviour
 
         playerVelocity.y -= gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
+    }
+
+    public void takeDamage(int dmg)
+    {
+        HP -= dmg;
+
+        StartCoroutine(damageFlash());
+    }
+
+    IEnumerator damageFlash()
+    {
+        gameManager.instance.playerDamage.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        gameManager.instance.playerDamage.SetActive(false);
     }
 }

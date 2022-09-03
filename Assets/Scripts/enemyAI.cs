@@ -10,7 +10,7 @@ public class enemyAI : MonoBehaviour, IDamageable
     [SerializeField] Renderer rend;
 
     [Header("----- Enemy Stats -----")]
-    [Range(0, 10)] [SerializeField] int HP;
+    [Range(0, 100)] [SerializeField] int HP;
     [Range(1, 10)] [SerializeField] int playerFaceSpeed;
 
     [Header("----- Weapon Stats -----")]
