@@ -21,6 +21,11 @@ public class enemyAI : MonoBehaviour, IDamageable
     Vector3 playerDir;
     bool isShooting;
 
+    private void Start()
+    {
+        gameManager.instance.enemyIncrement();
+    }
+
     void Update()
     {
         playerDir = gameManager.instance.player.transform.position - transform.position;
@@ -50,7 +55,10 @@ public class enemyAI : MonoBehaviour, IDamageable
         StartCoroutine(flashColor());
 
         if (HP <= 0)
+        {
+            gameManager.instance.enemyDecrement();
             Destroy(gameObject);
+        }
     }
 
     IEnumerator flashColor()

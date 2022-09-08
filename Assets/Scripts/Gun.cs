@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Gun : MonoBehaviour
 {
@@ -13,18 +14,24 @@ public class Gun : MonoBehaviour
     [SerializeField] int shootDamage;
     [SerializeField] int ammoReserve;
 
+    [Header("----- UI -----")]
+    
+
     bool isShooting;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        updateAmmoUI();
     }
 
     // Update is called once per frame
     void Update()
     {
-        StartCoroutine(shoot());
+        if (!gameManager.instance.isPaused)
+        {
+            StartCoroutine(shoot());
+        }
     }
 
     bool HaveAmmo()
@@ -41,16 +48,17 @@ public class Gun : MonoBehaviour
         {
             isShooting = true;
             ammoCap--;
+            updateAmmoUI();
 
             RaycastHit hit;
-            Debug.Log("Shooting");
+            //Debug.Log("Shooting");
             if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootdist))
             {
                 //if(hit.transform.CompareTag("Cube"))
-                Debug.Log("Casted");
+                //Debug.Log("Casted");
                 if (hit.collider.GetComponent<IDamageable>() != null)
                 {
-                    Debug.Log("Connected");
+                    //Debug.Log("Connected");
                     hit.collider.GetComponent<IDamageable>().takeDamage(shootDamage);
                 }
             }
@@ -58,5 +66,10 @@ public class Gun : MonoBehaviour
             yield return new WaitForSeconds(shootrate);
             isShooting = false;
         }
+    }
+
+    public void updateAmmoUI()
+    {
+        gameManager.instance.ammoCounter.text = ammoCap.ToString("F0");
     }
 }

@@ -148,7 +148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   agent: {fileID: -3367294246281936623}
   rend: {fileID: 8413228070784118114}
-  HP: 3
+  HP: 30
   playerFaceSpeed: 3
   shootRate: 0.5
   bullet: {fileID: 1304199123426473368, guid: 4d8f8ed30ef12b94fb06533d6341130e, type: 3}
