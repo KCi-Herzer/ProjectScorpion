@@ -157,9 +157,6 @@ MonoBehaviour:
   gravityValue: 25
   jumpHeight: 10
   jumpsMax: 2
-  shootRate: 0.1
-  shootDist: 1000
-  shootDamage: 10
   playerDamageFlashTime: 0.1
 --- !u!143 &8617749042347710660
 CharacterController:
@@ -283,6 +280,10 @@ PrefabInstance:
     - target: {fileID: 5348122453310359247, guid: 6f9ca98e999bc7345a93531a5e53d91d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6299775747254940550, guid: 6f9ca98e999bc7345a93531a5e53d91d, type: 3}
+      propertyPath: ammoCap
+      value: 18
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6f9ca98e999bc7345a93531a5e53d91d, type: 3}
