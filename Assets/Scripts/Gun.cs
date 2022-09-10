@@ -3,37 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Gun : MonoBehaviour
-{
+[CreateAssetMenu]
 
+public class Gun : ScriptableObject
+{
     [Header("----- Weapon Stats -----")]
-    [SerializeField] int ammoCap;
+    public float shootrate;
+    public int shootdist;
+    public int shootDamage;
+    public int ammoCap;
+    public GameObject model;
+
+
+    /*[SerializeField] int ammoCap;
     [SerializeField] int shootdist;
 
     [SerializeField] float shootrate;
     [SerializeField] int shootDamage;
-    [SerializeField] int ammoReserve;
+    [SerializeField] int ammoReserve;*/
 
-    [Header("----- UI -----")]
+
+    //[Header("----- UI -----")]
     
 
-    bool isShooting;
+    //bool isShooting;
 
     // Start is called before the first frame update
     void Start()
     {
-        updateAmmoUI();
+        //updateAmmoUI();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!gameManager.instance.isPaused)
-        {
-            StartCoroutine(shoot());
-        }
+        //if (!gameManager.instance.isPaused)
+        
+            //StartCoroutine(shoot());
+        
     }
-
+    /*
     bool HaveAmmo()
     {
         if (ammoCap > 0)
@@ -71,5 +80,5 @@ public class Gun : MonoBehaviour
     public void updateAmmoUI()
     {
         gameManager.instance.ammoCounter.text = ammoCap.ToString("F0");
-    }
+    }*/
 }
