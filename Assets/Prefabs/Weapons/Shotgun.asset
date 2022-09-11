@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be1be2ec9c6196f499b97b9059d52f9b, type: 3}
   m_Name: Shotgun
   m_EditorClassIdentifier: 
-  shootrate: 0.5
+  shootrate: 0.3
   shootdist: 400
   shootDamage: 45
   ammoCap: 10
   model: {fileID: 4796965006156008918, guid: 0b78281bde1348f49a4bde7bad555491, type: 3}
+  Auto: 1

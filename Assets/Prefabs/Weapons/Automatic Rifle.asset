@@ -17,3 +17,4 @@ MonoBehaviour:
   shootDamage: 25
   ammoCap: 32
   model: {fileID: 4808563068585924475, guid: afc721bdbdc755d46a75c26f2cbfb5c4, type: 3}
+  Auto: 1

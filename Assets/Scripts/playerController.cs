@@ -13,13 +13,14 @@ public class playerController : MonoBehaviour, IDamageable
     [SerializeField] float jumpHeight;
     [SerializeField] int jumpsMax;
 
-    //SEE GUN.CS for shooting
 
     [SerializeField] int ammoCap;
     [SerializeField] int shootdist;
 
     [SerializeField] float shootrate;
     [SerializeField] int shootDamage;
+    [SerializeField] int Auto;
+
 
     [Header("-----UI Settings-----")]
     [SerializeField] float playerDamageFlashTime;
@@ -50,9 +51,10 @@ public class playerController : MonoBehaviour, IDamageable
         {
             movement();
             gunSelect();
+
+            
             StartCoroutine(shoot());
         }
-        
     }
 
     void movement()
@@ -83,6 +85,7 @@ public class playerController : MonoBehaviour, IDamageable
         shootDamage = stats.shootDamage;
         shootdist = stats.shootdist;
         ammoCap = stats.ammoCap;
+        
 
         updateAmmoUI();
 
@@ -103,6 +106,8 @@ public class playerController : MonoBehaviour, IDamageable
                 shootdist = gunStats[selectedGun].shootdist;
                 shootDamage = gunStats[selectedGun].shootDamage;
                 ammoCap = gunStats[selectedGun].ammoCap;
+                Auto = gunStats[selectedGun].Auto;
+
 
                 updateAmmoUI();
 
@@ -116,6 +121,8 @@ public class playerController : MonoBehaviour, IDamageable
                 shootdist = gunStats[selectedGun].shootdist;
                 shootDamage = gunStats[selectedGun].shootDamage;
                 ammoCap = gunStats[selectedGun].ammoCap;
+                Auto = gunStats[selectedGun].Auto;
+                
                 
                 updateAmmoUI();
 
@@ -127,28 +134,42 @@ public class playerController : MonoBehaviour, IDamageable
 
     IEnumerator shoot()
     {
-        if (gunStats.Count >= 1 && !isShooting && Input.GetButtonDown("Shoot") && ammoCap > 0)
+            
+        if (gunStats.Count >= 1 && !isShooting && gunStats[selectedGun].Auto == 0 && Input.GetButtonDown("Shoot") && ammoCap > 0)
         {
-            isShooting = true;
-            ammoCap--;
-            updateAmmoUI();
-
-            RaycastHit hit;
-            //Debug.Log("Shooting");
-            if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootdist))
-            {
-                //if(hit.transform.CompareTag("Cube"))
-                //Debug.Log("Casted");
-                if (hit.collider.GetComponent<IDamageable>() != null)
-                {
-                    //Debug.Log("Connected");
-                    hit.collider.GetComponent<IDamageable>().takeDamage(shootDamage);
-                }
-            }
-            //Instantiate(Cube, transform.position, Cube.transform.rotation);
-            yield return new WaitForSeconds(shootrate);
-            isShooting = false;
+            shooting();
         }
+        else if(gunStats.Count >= 1 && !isShooting && gunStats[selectedGun].Auto == 1 && Input.GetButtonDown("Shoot") && ammoCap > 0)
+        {
+            shooting();
+        }
+
+        yield return new WaitForSeconds(shootrate);
+        isShooting = false;
+
+    }
+
+    void shooting()
+    {
+        isShooting = true;
+        ammoCap--;
+        updateAmmoUI();
+
+        RaycastHit hit;
+        //Debug.Log("Shooting");
+        if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootdist))
+        {
+            //if(hit.transform.CompareTag("Cube"))
+            //Debug.Log("Casted");
+
+            if (hit.collider.GetComponent<IDamageable>() != null)
+            {
+                //Debug.Log("Connected");
+                hit.collider.GetComponent<IDamageable>().takeDamage(shootDamage);
+            }
+        }
+        //Instantiate(Cube, transform.position, Cube.transform.rotation);
+        
     }
 
     public void updateAmmoUI()
