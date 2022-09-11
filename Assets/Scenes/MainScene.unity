@@ -6434,6 +6434,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: floor
       objectReference: {fileID: 0}
+    - target: {fileID: 5443504086197334820, guid: 7e4065016396c2748a3626ac4c9c273e, type: 3}
+      propertyPath: m_NavMeshLayer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5443504086197334824, guid: 7e4065016396c2748a3626ac4c9c273e, type: 3}
       propertyPath: m_RootOrder
       value: 8
