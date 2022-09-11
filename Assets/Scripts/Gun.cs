@@ -13,6 +13,8 @@ public class Gun : ScriptableObject
     public int shootDamage;
     public int ammoCap;
     public GameObject model;
+    public int Auto;
+    
 
 
     /*[SerializeField] int ammoCap;
@@ -42,43 +44,5 @@ public class Gun : ScriptableObject
             //StartCoroutine(shoot());
         
     }
-    /*
-    bool HaveAmmo()
-    {
-        if (ammoCap > 0)
-            return true;
-        else
-            return false;
-    }
-
-    IEnumerator shoot()
-    {
-        if (!isShooting && Input.GetButtonDown("Shoot") && HaveAmmo())
-        {
-            isShooting = true;
-            ammoCap--;
-            updateAmmoUI();
-
-            RaycastHit hit;
-            //Debug.Log("Shooting");
-            if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootdist))
-            {
-                //if(hit.transform.CompareTag("Cube"))
-                //Debug.Log("Casted");
-                if (hit.collider.GetComponent<IDamageable>() != null)
-                {
-                    //Debug.Log("Connected");
-                    hit.collider.GetComponent<IDamageable>().takeDamage(shootDamage);
-                }
-            }
-            //Instantiate(Cube, transform.position, Cube.transform.rotation);
-            yield return new WaitForSeconds(shootrate);
-            isShooting = false;
-        }
-    }
-
-    public void updateAmmoUI()
-    {
-        gameManager.instance.ammoCounter.text = ammoCap.ToString("F0");
-    }*/
+    
 }
