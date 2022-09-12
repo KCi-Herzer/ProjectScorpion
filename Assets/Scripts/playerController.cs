@@ -20,6 +20,7 @@ public class playerController : MonoBehaviour, IDamageable
     [SerializeField] float shootrate;
     [SerializeField] int shootDamage;
     [SerializeField] int Auto;
+    [SerializeField] int currentAmmo;
 
 
     [Header("-----UI Settings-----")]
@@ -33,7 +34,7 @@ public class playerController : MonoBehaviour, IDamageable
     int timesJumped;
     private Vector3 playerVelocity;
     Vector3 move;
-    bool isShooting;
+    public bool isShooting;
     int selectedGun;
 
 
@@ -51,8 +52,6 @@ public class playerController : MonoBehaviour, IDamageable
         {
             movement();
             gunSelect();
-
-            
             StartCoroutine(shoot());
         }
     }
@@ -85,6 +84,7 @@ public class playerController : MonoBehaviour, IDamageable
         shootDamage = stats.shootDamage;
         shootdist = stats.shootdist;
         ammoCap = stats.ammoCap;
+        currentAmmo = ammoCap;
         
 
         updateAmmoUI();
@@ -93,6 +93,7 @@ public class playerController : MonoBehaviour, IDamageable
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = stats.model.GetComponent<MeshRenderer>().sharedMaterial;
 
         gunStats.Add(stats);
+        //gunStats[selectedGun].currentAmmo = currentAmmo;
     }
 
     void gunSelect()
@@ -105,7 +106,7 @@ public class playerController : MonoBehaviour, IDamageable
                 shootrate = gunStats[selectedGun].shootrate;
                 shootdist = gunStats[selectedGun].shootdist;
                 shootDamage = gunStats[selectedGun].shootDamage;
-                ammoCap = gunStats[selectedGun].ammoCap;
+                currentAmmo = gunStats[selectedGun].currentAmmo;
                 Auto = gunStats[selectedGun].Auto;
 
 
@@ -120,7 +121,7 @@ public class playerController : MonoBehaviour, IDamageable
                 shootrate = gunStats[selectedGun].shootrate;
                 shootdist = gunStats[selectedGun].shootdist;
                 shootDamage = gunStats[selectedGun].shootDamage;
-                ammoCap = gunStats[selectedGun].ammoCap;
+                currentAmmo = gunStats[selectedGun].currentAmmo;
                 Auto = gunStats[selectedGun].Auto;
                 
                 
@@ -134,47 +135,42 @@ public class playerController : MonoBehaviour, IDamageable
 
     IEnumerator shoot()
     {
-            
-        if (gunStats.Count >= 1 && !isShooting && gunStats[selectedGun].Auto == 0 && Input.GetButtonDown("Shoot") && ammoCap > 0)
+        if (gunStats.Count >= 1 && currentAmmo > 0 && Input.GetButton("Shoot") && !isShooting)
         {
-            shooting();
-        }
-        else if(gunStats.Count >= 1 && !isShooting && gunStats[selectedGun].Auto == 1 && Input.GetButtonDown("Shoot") && ammoCap > 0)
-        {
-            shooting();
-        }
+            isShooting = true;
+            currentAmmo--;
+            gunStats[selectedGun].currentAmmo = currentAmmo;
+            updateAmmoUI();
 
-        yield return new WaitForSeconds(shootrate);
-        isShooting = false;
-
-    }
-
-    void shooting()
-    {
-        isShooting = true;
-        ammoCap--;
-        updateAmmoUI();
-
-        RaycastHit hit;
-        //Debug.Log("Shooting");
-        if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootdist))
-        {
-            //if(hit.transform.CompareTag("Cube"))
-            //Debug.Log("Casted");
-
-            if (hit.collider.GetComponent<IDamageable>() != null)
+            RaycastHit hit;
+            //Debug.Log("Shooting");
+            if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootdist))
             {
-                //Debug.Log("Connected");
-                hit.collider.GetComponent<IDamageable>().takeDamage(shootDamage);
+                //if(hit.transform.CompareTag("Cube"))
+                //Debug.Log("Casted");
+
+                if (hit.collider.GetComponent<IDamageable>() != null)
+                {
+                    //Debug.Log("Connected");
+                    hit.collider.GetComponent<IDamageable>().takeDamage(shootDamage);
+                }
+            }
+            if (gunStats[selectedGun].Auto == 1)
+            {
+                yield return new WaitForSeconds(shootrate);
+                isShooting = false;
+            }
+            else if (gunStats[selectedGun].Auto == 0)
+            {
+                yield return new WaitForSeconds(shootrate);
+                isShooting = false;
             }
         }
-        //Instantiate(Cube, transform.position, Cube.transform.rotation);
-        
     }
 
     public void updateAmmoUI()
     {
-        gameManager.instance.ammoCounter.text = ammoCap.ToString("F0");
+        gameManager.instance.ammoCounter.text = currentAmmo.ToString("F0");
     }
 
     public void takeDamage(int dmg)

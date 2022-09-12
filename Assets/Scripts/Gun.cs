@@ -14,7 +14,8 @@ public class Gun : ScriptableObject
     public int ammoCap;
     public GameObject model;
     public int Auto;
-    
+    public int currentAmmo;
+
 
 
     /*[SerializeField] int ammoCap;
@@ -26,7 +27,7 @@ public class Gun : ScriptableObject
 
 
     //[Header("----- UI -----")]
-    
+
 
     //bool isShooting;
 
