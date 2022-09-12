@@ -23,7 +23,7 @@ public class enemyAI : MonoBehaviour, IDamageable
     bool playerInRange;
     Vector3 lastPlayerPos;
     float stoppingDistOrig;
-    bool hasSeen;
+    bool hasSeen; //Made this to see where the player was when breaking LOS
 
     private void Start()
     {
@@ -40,12 +40,9 @@ public class enemyAI : MonoBehaviour, IDamageable
         {
             rayToPlayer();
         }
-        else
-        {
-            agent.SetDestination(lastPlayerPos);
-            agent.stoppingDistance = 0;
-        }
-        
+        //No longer needed because this is now called in rayToPlayer
+        //agent.SetDestination(lastPlayerPos);
+        //agent.stoppingDistance = 0;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -54,13 +51,14 @@ public class enemyAI : MonoBehaviour, IDamageable
             playerInRange = true;
     }
 
-    private void OnTriggerExit(Collider other)
+     void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
             lastPlayerPos = gameManager.instance.player.transform.position;
             agent.stoppingDistance = 0;
+            hasSeen = false;
         }
     }
 
@@ -111,7 +109,7 @@ public class enemyAI : MonoBehaviour, IDamageable
             Debug.DrawRay(transform.position, playerDir);
             if (hit.collider.CompareTag("Player"))
             {
-                //Made this to see where the player was when breaking LOS
+                
                 hasSeen = true; 
                 lastPlayerPos = gameManager.instance.player.transform.position;
 
@@ -135,8 +133,12 @@ public class enemyAI : MonoBehaviour, IDamageable
             {
                 hasSeen = false;
             }
-
         }
-        
+    }
+
+    public void playerDied()
+    {
+        //Added to fix bug: OnCollisionExit not being called when player dies
+        playerInRange = false;
     }
 }
