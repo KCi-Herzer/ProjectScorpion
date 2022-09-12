@@ -36,8 +36,7 @@ public class playerController : MonoBehaviour, IDamageable
     Vector3 move;
     public bool isShooting;
     int selectedGun;
-
-
+    public bool hasGun; //Added for ammoPickup
 
     private void Start()
     {
@@ -80,6 +79,7 @@ public class playerController : MonoBehaviour, IDamageable
 
     public void gunPickup(Gun stats)
     {
+        hasGun = true;
         shootrate = stats.shootrate;
         shootDamage = stats.shootDamage;
         shootdist = stats.shootdist;
@@ -94,6 +94,14 @@ public class playerController : MonoBehaviour, IDamageable
 
         gunStats.Add(stats);
         //gunStats[selectedGun].currentAmmo = currentAmmo;
+    }
+
+    public void ammoPickup(int ammoAmount)
+    {
+        Debug.Log(ammoCap);
+        ammoCap += ammoAmount;
+        updateAmmoUI();
+        Debug.Log(ammoCap);
     }
 
     void gunSelect()

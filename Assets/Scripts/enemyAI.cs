@@ -23,7 +23,7 @@ public class enemyAI : MonoBehaviour, IDamageable
     bool playerInRange;
     Vector3 lastPlayerPos;
     float stoppingDistOrig;
-    bool hasSeen;
+    bool hasSeen; //Made this to see where the player was when breaking LOS
 
     private void Start()
     {
@@ -45,7 +45,6 @@ public class enemyAI : MonoBehaviour, IDamageable
             agent.SetDestination(lastPlayerPos);
             agent.stoppingDistance = 0;
         }
-        
     }
 
     private void OnTriggerEnter(Collider other)
@@ -54,13 +53,14 @@ public class enemyAI : MonoBehaviour, IDamageable
             playerInRange = true;
     }
 
-    private void OnTriggerExit(Collider other)
+     void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
             lastPlayerPos = gameManager.instance.player.transform.position;
             agent.stoppingDistance = 0;
+            hasSeen = false;
         }
     }
 
@@ -77,7 +77,6 @@ public class enemyAI : MonoBehaviour, IDamageable
 
         StartCoroutine(flashColor());
         lastPlayerPos = gameManager.instance.player.transform.position;
-
 
         if (HP <= 0)
         {
@@ -111,11 +110,11 @@ public class enemyAI : MonoBehaviour, IDamageable
             Debug.DrawRay(transform.position, playerDir);
             if (hit.collider.CompareTag("Player"))
             {
-                //Made this to see where the player was when breaking LOS
-                hasSeen = true; 
+                hasSeen = true;
                 lastPlayerPos = gameManager.instance.player.transform.position;
 
                 agent.SetDestination(gameManager.instance.player.transform.position);
+                
                 agent.stoppingDistance = stoppingDistOrig;
 
                 if (agent.stoppingDistance >= agent.remainingDistance) //Changed <= to >=
@@ -124,7 +123,7 @@ public class enemyAI : MonoBehaviour, IDamageable
                 if (!isShooting)
                     StartCoroutine(shoot());
             }
-            else if (hasSeen == true)
+            else if (hasSeen == true )
             {
                 //If the enemy has seen the player, they will follow after
                 //Just like exiting the range, but instead exiting sight
@@ -135,8 +134,13 @@ public class enemyAI : MonoBehaviour, IDamageable
             {
                 hasSeen = false;
             }
-
         }
+    }
+
+    public void playerDied()
+    {
+        //Added to fix bug: OnCollisionExit not being called when player dies
         
+        playerInRange = false;
     }
 }

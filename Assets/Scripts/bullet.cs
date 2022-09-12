@@ -13,7 +13,8 @@ public class bullet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb.velocity = transform.forward * speed;
+        Vector3 direction = gameManager.instance.player.transform.position - rb.position;
+        rb.velocity = direction * speed;
         Destroy(gameObject, destroyTime);
     }
 

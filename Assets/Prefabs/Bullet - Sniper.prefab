@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1008403596346471464}
   - component: {fileID: 3215629789120279935}
   m_Layer: 8
-  m_Name: Bullet
+  m_Name: Bullet - Sniper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49,7 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 6850715789477820944}
   damage: 5
-  speed: 20
+  speed: 2
   destroyTime: 3
 --- !u!54 &6850715789477820944
 Rigidbody:

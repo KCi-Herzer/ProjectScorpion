@@ -81,6 +81,14 @@ public class gameManager : MonoBehaviour
         playerDeadMenu.SetActive(isPaused);
         menuCurrentlyOpen = playerDeadMenu;
         cursorLockPause();
+
+        enemyAI[] currentEnemys;
+        currentEnemys = FindObjectsOfType<enemyAI>();
+        foreach (enemyAI enemy in currentEnemys)
+        {
+            enemy.playerDied();
+        }
+        
     }
 
     public void enemyDecrement()
