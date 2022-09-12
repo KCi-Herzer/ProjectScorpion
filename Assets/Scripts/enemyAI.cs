@@ -41,8 +41,8 @@ public class enemyAI : MonoBehaviour, IDamageable
             rayToPlayer();
         }
         //No longer needed because this is now called in rayToPlayer
-        //agent.SetDestination(lastPlayerPos);
-        //agent.stoppingDistance = 0;
+        agent.SetDestination(lastPlayerPos);
+        agent.stoppingDistance = 0;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -75,7 +75,6 @@ public class enemyAI : MonoBehaviour, IDamageable
 
         StartCoroutine(flashColor());
         lastPlayerPos = gameManager.instance.player.transform.position;
-
 
         if (HP <= 0)
         {
