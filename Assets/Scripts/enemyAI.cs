@@ -109,7 +109,6 @@ public class enemyAI : MonoBehaviour, IDamageable
             Debug.DrawRay(transform.position, playerDir);
             if (hit.collider.CompareTag("Player"))
             {
-                
                 hasSeen = true; 
                 lastPlayerPos = gameManager.instance.player.transform.position;
 
@@ -139,6 +138,7 @@ public class enemyAI : MonoBehaviour, IDamageable
     public void playerDied()
     {
         //Added to fix bug: OnCollisionExit not being called when player dies
+        
         playerInRange = false;
     }
 }
