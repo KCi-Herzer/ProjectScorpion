@@ -55,7 +55,7 @@ MonoBehaviour:
   HP: 30
   playerFaceSpeed: 3
   shootRate: 3
-  bullet: {fileID: 1304199123426473368, guid: 4d8f8ed30ef12b94fb06533d6341130e, type: 3}
+  bullet: {fileID: 1304199123426473368, guid: df7e7cfd6c3ddcb40a7ff9baccca6efa, type: 3}
   shootPos: {fileID: 7813964289953000902}
 --- !u!195 &3762982249447746770
 NavMeshAgent:
