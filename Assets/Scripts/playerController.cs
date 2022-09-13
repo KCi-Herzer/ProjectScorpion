@@ -13,22 +13,18 @@ public class playerController : MonoBehaviour, IDamageable
     [SerializeField] float jumpHeight;
     [SerializeField] int jumpsMax;
 
-
-    [SerializeField] int ammoCap;
+    [Header("----- Gun Stats -----")]
     [SerializeField] int shootdist;
-
     [SerializeField] float shootrate;
     [SerializeField] int shootDamage;
-    [SerializeField] int Auto;
-    [SerializeField] int currentAmmo;
-
+    [SerializeField] int Auto; 
+    [SerializeField] List<Gun> gunStats = new List<Gun>();
+    [SerializeField] GameObject gunModel;
+    int currentAmmo;
+    //int ammoCap; not used
 
     [Header("-----UI Settings-----")]
     [SerializeField] float playerDamageFlashTime;
-
-
-    [SerializeField] List<Gun> gunStats = new List<Gun>();
-    [SerializeField] GameObject gunModel;
 
     int HPOrig;
     int timesJumped;
@@ -43,6 +39,10 @@ public class playerController : MonoBehaviour, IDamageable
         HPOrig = HP;
         respawn();
         //updateAmmoUI();
+        if (!hasGun)
+        {
+            gameManager.instance.ammoCounter.text = "";
+        }
     }
 
     void Update()
@@ -79,29 +79,30 @@ public class playerController : MonoBehaviour, IDamageable
 
     public void gunPickup(Gun stats)
     {
+        if (hasGun)
+        {
+            selectedGun++;
+        }
         hasGun = true;
         shootrate = stats.shootrate;
         shootDamage = stats.shootDamage;
         shootdist = stats.shootdist;
-        ammoCap = stats.ammoCap;
-        currentAmmo = ammoCap;
+        stats.setStartingAmmo();
+        currentAmmo = stats.getAmmoCount;
         
-
-
         gunModel.GetComponent<MeshFilter>().sharedMesh = stats.model.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = stats.model.GetComponent<MeshRenderer>().sharedMaterial;
 
         gunStats.Add(stats);
+        
         updateAmmoUI();
-        //gunStats[selectedGun].currentAmmo = currentAmmo;
     }
 
     public void ammoPickup(int ammoAmount)
     {
-        Debug.Log(currentAmmo);
         currentAmmo += ammoAmount;
+        gunStats[selectedGun].getAmmoCount = currentAmmo;
         updateAmmoUI();
-        Debug.Log(currentAmmo);
     }
 
     void gunSelect()
@@ -114,9 +115,11 @@ public class playerController : MonoBehaviour, IDamageable
                 shootrate = gunStats[selectedGun].shootrate;
                 shootdist = gunStats[selectedGun].shootdist;
                 shootDamage = gunStats[selectedGun].shootDamage;
-                currentAmmo = gunStats[selectedGun].currentAmmo;
-                Auto = gunStats[selectedGun].Auto;
 
+                currentAmmo = gunStats[selectedGun].getAmmoCount;
+                
+
+                Auto = gunStats[selectedGun].Auto;
 
                 updateAmmoUI();
 
@@ -129,10 +132,9 @@ public class playerController : MonoBehaviour, IDamageable
                 shootrate = gunStats[selectedGun].shootrate;
                 shootdist = gunStats[selectedGun].shootdist;
                 shootDamage = gunStats[selectedGun].shootDamage;
-                currentAmmo = gunStats[selectedGun].currentAmmo;
+                currentAmmo = gunStats[selectedGun].getAmmoCount;
                 Auto = gunStats[selectedGun].Auto;
-                
-                
+
                 updateAmmoUI();
 
                 gunModel.GetComponent<MeshFilter>().sharedMesh = gunStats[selectedGun].model.GetComponent<MeshFilter>().sharedMesh;
@@ -147,11 +149,10 @@ public class playerController : MonoBehaviour, IDamageable
         {
             isShooting = true;
             currentAmmo--;
-            gunStats[selectedGun].currentAmmo = currentAmmo;
+            gunStats[selectedGun].getAmmoCount = currentAmmo;
             updateAmmoUI();
 
             RaycastHit hit;
-            //Debug.Log("Shooting");
             if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootdist))
             {
                 //if(hit.transform.CompareTag("Cube"))
@@ -178,7 +179,7 @@ public class playerController : MonoBehaviour, IDamageable
 
     public void updateAmmoUI()
     {
-        gameManager.instance.ammoCounter.text = gunStats[selectedGun].currentAmmo.ToString("F0");
+        gameManager.instance.ammoCounter.text = gunStats[selectedGun].getAmmoCount.ToString("F0");
     }
 
     public void takeDamage(int dmg)

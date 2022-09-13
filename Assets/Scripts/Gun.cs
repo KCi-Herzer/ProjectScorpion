@@ -14,36 +14,18 @@ public class Gun : ScriptableObject
     public int ammoCap;
     public GameObject model;
     public int Auto;
-    public int currentAmmo;
 
+    int currentAmmo;
 
-
-    /*[SerializeField] int ammoCap;
-    [SerializeField] int shootdist;
-
-    [SerializeField] float shootrate;
-    [SerializeField] int shootDamage;
-    [SerializeField] int ammoReserve;*/
-
-
-    //[Header("----- UI -----")]
-
-
-    //bool isShooting;
-
-    // Start is called before the first frame update
-    void Start()
+    public void setStartingAmmo()
     {
-        //updateAmmoUI();
+        currentAmmo = ammoCap;
     }
 
-    // Update is called once per frame
-    void Update()
+    public int getAmmoCount
     {
-        //if (!gameManager.instance.isPaused)
-        
-            //StartCoroutine(shoot());
-        
+        get { return currentAmmo; }
+        set { currentAmmo = value; }
     }
     
 }
