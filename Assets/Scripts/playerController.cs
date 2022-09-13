@@ -42,7 +42,7 @@ public class playerController : MonoBehaviour, IDamageable
     {
         HPOrig = HP;
         respawn();
-        updateAmmoUI();
+        //updateAmmoUI();
     }
 
     void Update()
@@ -87,21 +87,21 @@ public class playerController : MonoBehaviour, IDamageable
         currentAmmo = ammoCap;
         
 
-        updateAmmoUI();
 
         gunModel.GetComponent<MeshFilter>().sharedMesh = stats.model.GetComponent<MeshFilter>().sharedMesh;
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = stats.model.GetComponent<MeshRenderer>().sharedMaterial;
 
         gunStats.Add(stats);
+        updateAmmoUI();
         //gunStats[selectedGun].currentAmmo = currentAmmo;
     }
 
     public void ammoPickup(int ammoAmount)
     {
-        Debug.Log(ammoCap);
-        ammoCap += ammoAmount;
+        Debug.Log(currentAmmo);
+        currentAmmo += ammoAmount;
         updateAmmoUI();
-        Debug.Log(ammoCap);
+        Debug.Log(currentAmmo);
     }
 
     void gunSelect()
@@ -178,7 +178,7 @@ public class playerController : MonoBehaviour, IDamageable
 
     public void updateAmmoUI()
     {
-        gameManager.instance.ammoCounter.text = currentAmmo.ToString("F0");
+        gameManager.instance.ammoCounter.text = gunStats[selectedGun].currentAmmo.ToString("F0");
     }
 
     public void takeDamage(int dmg)
