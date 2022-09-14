@@ -250,7 +250,8 @@ MonoBehaviour:
   speedRoam: 2
   speedChase: 5
   playerFaceSpeed: 3
-  roamRadius: 5
+  roamRadius: 50
+  viewAngle: 90
   shootRate: 0.5
   bullet: {fileID: 1304199123426473368, guid: 4d8f8ed30ef12b94fb06533d6341130e, type: 3}
   shootPos: {fileID: 652174005212839941}

@@ -15,6 +15,8 @@ public class enemyAI : MonoBehaviour, IDamageable
     [Range(1, 10)] [SerializeField] float speedChase;
     [Range(1, 10)] [SerializeField] int playerFaceSpeed;
     [Range(1, 50)] [SerializeField] int roamRadius;
+    [Range(1, 180)] [SerializeField] int viewAngle;
+
 
     [Header("----- Weapon Stats -----")]
     [SerializeField] float shootRate;
@@ -29,6 +31,7 @@ public class enemyAI : MonoBehaviour, IDamageable
     bool hasSeen; //Made this to see where the player was when breaking LOS
     Vector3 startingPos;
     bool roamPathValid;
+    float angle;
 
     private void Start()
     {
@@ -45,6 +48,9 @@ public class enemyAI : MonoBehaviour, IDamageable
 
         if (playerInRange)
         {
+            //if(angle > viewAngle && agent.stoppingDistance != 0) - Student's code from class
+                //facePlayer();
+            
             rayToPlayer();
         }
         else if(agent.remainingDistance < 0.001f)
@@ -52,7 +58,6 @@ public class enemyAI : MonoBehaviour, IDamageable
             roam();
             //agent.SetDestination(lastPlayerPos);
             //agent.stoppingDistance = 0;
-
         }
     }
 
@@ -130,26 +135,27 @@ public class enemyAI : MonoBehaviour, IDamageable
 
     void rayToPlayer()
     {
+        float angle = Vector3.Angle(playerDir, transform.forward);
+
         RaycastHit hit;
         if (Physics.Raycast(transform.position, playerDir, out hit))
         {
             Debug.DrawRay(transform.position, playerDir);
-            if (hit.collider.CompareTag("Player"))
+            if (hit.collider.CompareTag("Player") && angle <= viewAngle)
             {
                 hasSeen = true;
                 lastPlayerPos = gameManager.instance.player.transform.position;
 
                 agent.SetDestination(gameManager.instance.player.transform.position);
-                
                 agent.stoppingDistance = stoppingDistOrig;
 
-                if (agent.stoppingDistance >= agent.remainingDistance) //Changed <= to >=
-                    facePlayer();
+                facePlayer();
+                //if (agent.stoppingDistance >= agent.remainingDistance) //Changed <= to >=
 
                 if (!isShooting)
                     StartCoroutine(shoot());
             }
-            else if (hasSeen == true )
+            else if (hasSeen == true)
             {
                 //If the enemy has seen the player, they will follow after
                 //Just like exiting the range, but instead exiting sight
