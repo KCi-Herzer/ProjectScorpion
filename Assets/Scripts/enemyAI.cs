@@ -11,7 +11,10 @@ public class enemyAI : MonoBehaviour, IDamageable
 
     [Header("----- Enemy Stats -----")]
     [Range(0, 100)] [SerializeField] int HP;
+    [Range(1, 10)] [SerializeField] float speedRoam;
+    [Range(1, 10)] [SerializeField] float speedChase;
     [Range(1, 10)] [SerializeField] int playerFaceSpeed;
+    [Range(1, 50)] [SerializeField] int roamRadius;
 
     [Header("----- Weapon Stats -----")]
     [SerializeField] float shootRate;
@@ -24,12 +27,16 @@ public class enemyAI : MonoBehaviour, IDamageable
     Vector3 lastPlayerPos;
     float stoppingDistOrig;
     bool hasSeen; //Made this to see where the player was when breaking LOS
+    Vector3 startingPos;
+    bool roamPathValid;
 
     private void Start()
     {
         gameManager.instance.enemyIncrement();
         lastPlayerPos = transform.position;
         stoppingDistOrig = agent.stoppingDistance;
+        speedRoam = agent.speed;
+        startingPos = transform.position;
     }
 
     void Update()
@@ -40,11 +47,30 @@ public class enemyAI : MonoBehaviour, IDamageable
         {
             rayToPlayer();
         }
-        else
+        else if(agent.remainingDistance < 0.001f)
         {
-            agent.SetDestination(lastPlayerPos);
-            agent.stoppingDistance = 0;
+            roam();
+            //agent.SetDestination(lastPlayerPos);
+            //agent.stoppingDistance = 0;
+
         }
+    }
+
+    void roam()
+    {
+        agent.stoppingDistance = 0;
+        agent.speed = speedRoam;
+
+        Vector3 randomDir = Random.insideUnitSphere * roamRadius;
+        randomDir += startingPos;
+
+        NavMeshHit hit;
+        NavMesh.SamplePosition(randomDir, out hit, 1, 1);
+        NavMeshPath path = new NavMeshPath();
+        
+        agent.CalculatePath(hit.position, path);
+        agent.SetPath(path);
+        
     }
 
     private void OnTriggerEnter(Collider other)

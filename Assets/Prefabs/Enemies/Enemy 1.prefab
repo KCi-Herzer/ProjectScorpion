@@ -247,7 +247,10 @@ MonoBehaviour:
   agent: {fileID: -3367294246281936623}
   rend: {fileID: 8413228070784118114}
   HP: 30
+  speedRoam: 2
+  speedChase: 5
   playerFaceSpeed: 3
+  roamRadius: 5
   shootRate: 0.5
   bullet: {fileID: 1304199123426473368, guid: 4d8f8ed30ef12b94fb06533d6341130e, type: 3}
   shootPos: {fileID: 652174005212839941}

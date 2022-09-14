@@ -9,6 +9,7 @@ public class playerController : MonoBehaviour, IDamageable
     [Header("----- Player Stats -----")]
     [SerializeField] int HP;
     [SerializeField] float playerSpeed;
+    [SerializeField] float sprintMulti;
     [SerializeField] float gravityValue;
     [SerializeField] float jumpHeight;
     [SerializeField] int jumpsMax;
@@ -23,6 +24,21 @@ public class playerController : MonoBehaviour, IDamageable
     int currentAmmo;
     //int ammoCap; not used
 
+    [Header("----- Audio -----")]
+
+    [SerializeField] AudioSource aud;
+
+    [Range(0, 1)] [SerializeField] float gunShootSoundVol;
+    
+    [SerializeField] AudioClip[] playerDamage;
+    [Range(0, 1)] [SerializeField] float playerDamageVol;
+
+    [SerializeField] AudioClip[] playerJumpSound;
+    [Range(0, 1)] [SerializeField] float playerJumpSoundVol;
+
+    [SerializeField] AudioClip[] playerFootstepsSound;
+    [Range(0, 1)] [SerializeField] float playerFootstepsSoundVol;
+
     [Header("-----UI Settings-----")]
     [SerializeField] float playerDamageFlashTime;
 
@@ -33,11 +49,15 @@ public class playerController : MonoBehaviour, IDamageable
     public bool isShooting;
     int selectedGun;
     public bool hasGun; //Added for ammoPickup
+    float playerSpeedOrig;
+    bool isSprinting;
+    bool playingFootSteps;
 
     private void Start()
     {
         HPOrig = HP;
         respawn();
+        playerSpeedOrig = playerSpeed;
         //updateAmmoUI();
         if (!hasGun)
         {
@@ -50,6 +70,8 @@ public class playerController : MonoBehaviour, IDamageable
         if (!gameManager.instance.isPaused)
         {
             movement();
+            sprint();
+            StartCoroutine(footSteps());
             gunSelect();
             StartCoroutine(shoot());
         }
@@ -70,23 +92,50 @@ public class playerController : MonoBehaviour, IDamageable
         {
             playerVelocity.y = jumpHeight;
             timesJumped++;
+            aud.PlayOneShot(playerJumpSound[Random.Range(0, playerJumpSound.Length)], playerJumpSoundVol);
         }
 
         playerVelocity.y -= gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
     }
 
+    void sprint()
+    {
+        if(Input.GetButtonDown("Sprint"))
+        {
+            isSprinting = true;
+            playerSpeed = playerSpeed * sprintMulti;
+        }
+        else if(Input.GetButtonUp("Sprint"))
+        {
+            isSprinting = false;
+            playerSpeed = playerSpeedOrig;
+        }
+    }
+
+    IEnumerator footSteps()
+    {
+        if(!playingFootSteps && controller.isGrounded && move.normalized.magnitude > .3)
+        {
+            playingFootSteps = true;
+            aud.PlayOneShot(playerFootstepsSound[Random.Range(0, playerFootstepsSound.Length)], playerFootstepsSoundVol);
+
+            if (isSprinting)
+                yield return new WaitForSeconds(0.3f);
+            else
+                yield return new WaitForSeconds(0.4f);
+
+            playingFootSteps = false;
+        }
+    }
 
     public void gunPickup(Gun stats)
     {
-        if (hasGun)
-        {
-            selectedGun++;
-        }
         hasGun = true;
         shootrate = stats.shootrate;
         shootDamage = stats.shootDamage;
         shootdist = stats.shootdist;
+
         stats.setStartingAmmo();
         currentAmmo = stats.getAmmoCount;
         
@@ -94,6 +143,7 @@ public class playerController : MonoBehaviour, IDamageable
         gunModel.GetComponent<MeshRenderer>().sharedMaterial = stats.model.GetComponent<MeshRenderer>().sharedMaterial;
 
         gunStats.Add(stats);
+        selectedGun = gunStats.Count - 1;
         
         updateAmmoUI();
     }
@@ -152,6 +202,8 @@ public class playerController : MonoBehaviour, IDamageable
             gunStats[selectedGun].getAmmoCount = currentAmmo;
             updateAmmoUI();
 
+            aud.PlayOneShot(gunStats[selectedGun].sound, gunShootSoundVol);
+
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.ViewportPointToRay(new Vector2(0.5f, 0.5f)), out hit, shootdist))
             {
@@ -159,10 +211,12 @@ public class playerController : MonoBehaviour, IDamageable
                 //Debug.Log("Casted");
 
                 if (hit.collider.GetComponent<IDamageable>() != null)
-                {
-                    //Debug.Log("Connected");
                     hit.collider.GetComponent<IDamageable>().takeDamage(shootDamage);
-                }
+                //Debug.Log("Connected");
+
+                Instantiate(gunStats[selectedGun].hitEffect, hit.point, transform.rotation);
+                Instantiate(gunStats[selectedGun].hitEffect, gunModel.transform.position, transform.rotation);
+
             }
             if (gunStats[selectedGun].Auto == 1)
             {
@@ -186,6 +240,7 @@ public class playerController : MonoBehaviour, IDamageable
     {
         HP -= dmg;
         updatePlayerHP();
+        aud.PlayOneShot(playerDamage[Random.Range(0, playerDamage.Length)], playerDamageVol);
 
         StartCoroutine(damageFlash());
 

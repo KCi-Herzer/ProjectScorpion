@@ -12,8 +12,10 @@ public class Gun : ScriptableObject
     public int shootdist;
     public int shootDamage;
     public int ammoCap;
-    public GameObject model;
     public int Auto;
+    public GameObject model;
+    public AudioClip sound;
+    public GameObject hitEffect;
 
     int currentAmmo;
 

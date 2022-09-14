@@ -196,6 +196,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9110560520383109094}
   - component: {fileID: -7019688997131613842}
+  - component: {fileID: 5541817970077441738}
   - component: {fileID: 8617749042347710660}
   - component: {fileID: 7441575336775155582}
   - component: {fileID: 4741837934581849023}
@@ -237,16 +238,141 @@ MonoBehaviour:
   controller: {fileID: 8617749042347710660}
   HP: 15
   playerSpeed: 10
+  sprintMulti: 2
   gravityValue: 25
   jumpHeight: 10
   jumpsMax: 2
-  ammoCap: 0
   shootdist: 0
   shootrate: 0
   shootDamage: 0
-  playerDamageFlashTime: 0.1
+  Auto: 0
   gunStats: []
   gunModel: {fileID: 4482488780477489181}
+  aud: {fileID: 5541817970077441738}
+  gunShootSoundVol: 0.5
+  playerDamage:
+  - {fileID: 8300000, guid: c78c400a57fa58541b73332ec3f86117, type: 3}
+  - {fileID: 8300000, guid: aee5bdf3465c2c7409322d2a83d60133, type: 3}
+  - {fileID: 8300000, guid: 5095f38008c71274ebdb03b4c61e33dc, type: 3}
+  - {fileID: 8300000, guid: 9194f7c71b501934396e41d841d5d051, type: 3}
+  - {fileID: 8300000, guid: a55f3e7f5a4efc8418a901954ad2eb19, type: 3}
+  - {fileID: 8300000, guid: b100c12961974444e8525d0d8a91f6aa, type: 3}
+  playerDamageVol: 0.5
+  playerJumpSound:
+  - {fileID: 8300000, guid: fcfcc5f25eb0bf947b0cb23659372d08, type: 3}
+  - {fileID: 8300000, guid: c47d615f29083854cb686317f68e2e9a, type: 3}
+  - {fileID: 8300000, guid: 55b778d52c0477548961302dc54bdb5c, type: 3}
+  playerJumpSoundVol: 0.5
+  playerFootstepsSound:
+  - {fileID: 8300000, guid: f77f5b0bda8cd1f4a9b8ea21885a87df, type: 3}
+  - {fileID: 8300000, guid: eace764cac34d054da8f48343564e611, type: 3}
+  - {fileID: 8300000, guid: 2bd5e795734cdfe4698f9c155df4c99d, type: 3}
+  - {fileID: 8300000, guid: 23f294d727a6f1d4abae60bbcd341cc5, type: 3}
+  - {fileID: 8300000, guid: 4c3b8479212208f4cbefd44dd5fac8cc, type: 3}
+  - {fileID: 8300000, guid: 15c8f3dc459a57d45ab00b1f189eb379, type: 3}
+  - {fileID: 8300000, guid: 24adb09c08000424e88ba57670c523a7, type: 3}
+  - {fileID: 8300000, guid: 732dc1a1bb9702440ba966282934d804, type: 3}
+  - {fileID: 8300000, guid: 2047059f09d362e4086d338f514a288a, type: 3}
+  playerFootstepsSoundVol: 0.5
+  playerDamageFlashTime: 0.1
+  isShooting: 0
+  hasGun: 0
+--- !u!82 &5541817970077441738
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5325371353639695690}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!143 &8617749042347710660
 CharacterController:
   m_ObjectHideFlags: 0
