@@ -44,21 +44,17 @@ public class enemyAI : MonoBehaviour, IDamageable
 
     void Update()
     {
+        float angle = Vector3.Angle(playerDir, transform.forward);
         playerDir = gameManager.instance.player.transform.position - transform.position;
 
-        if (playerInRange && angle > viewAngle)
+        if (playerInRange)
         {
-            //if(angle > viewAngle && agent.stoppingDistance != 0) - Student's code from class
-                //facePlayer();
-            
             rayToPlayer();
-            roam();
         }
-        else if(agent.remainingDistance < 0.001f)
+
+        if(agent.remainingDistance < 0.001f && agent.destination != gameManager.instance.player.transform.position)
         {
             roam();
-            //agent.SetDestination(lastPlayerPos);
-            //agent.stoppingDistance = 0;
         }
     }
 
