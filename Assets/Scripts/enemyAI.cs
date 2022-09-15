@@ -46,12 +46,13 @@ public class enemyAI : MonoBehaviour, IDamageable
     {
         playerDir = gameManager.instance.player.transform.position - transform.position;
 
-        if (playerInRange)
+        if (playerInRange && angle > viewAngle)
         {
             //if(angle > viewAngle && agent.stoppingDistance != 0) - Student's code from class
                 //facePlayer();
             
             rayToPlayer();
+            roam();
         }
         else if(agent.remainingDistance < 0.001f)
         {
@@ -75,7 +76,6 @@ public class enemyAI : MonoBehaviour, IDamageable
         
         agent.CalculatePath(hit.position, path);
         agent.SetPath(path);
-        
     }
 
     private void OnTriggerEnter(Collider other)
