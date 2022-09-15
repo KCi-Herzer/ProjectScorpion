@@ -32,6 +32,7 @@ public class enemyAI : MonoBehaviour, IDamageable
     Vector3 startingPos;
     bool roamPathValid;
     float angle;
+    bool isDmg;
 
     private void Start()
     {
@@ -46,13 +47,13 @@ public class enemyAI : MonoBehaviour, IDamageable
     {
         playerDir = gameManager.instance.player.transform.position - transform.position;
 
-        if (playerInRange && angle > viewAngle)
+        if (playerInRange)
         {
             //if(angle > viewAngle && agent.stoppingDistance != 0) - Student's code from class
                 //facePlayer();
             
             rayToPlayer();
-            roam();
+            
         }
         else if(agent.remainingDistance < 0.001f)
         {
@@ -60,6 +61,9 @@ public class enemyAI : MonoBehaviour, IDamageable
             //agent.SetDestination(lastPlayerPos);
             //agent.stoppingDistance = 0;
         }
+
+        
+
     }
 
     void roam()
@@ -69,6 +73,7 @@ public class enemyAI : MonoBehaviour, IDamageable
 
         Vector3 randomDir = Random.insideUnitSphere * roamRadius;
         randomDir += startingPos;
+        
 
         NavMeshHit hit;
         NavMesh.SamplePosition(randomDir, out hit, 1, 1);
@@ -105,14 +110,21 @@ public class enemyAI : MonoBehaviour, IDamageable
     public void takeDamage(int dmg)
     {
         HP -= dmg;
-
+        
         StartCoroutine(flashColor());
         lastPlayerPos = gameManager.instance.player.transform.position;
 
+        
         if (HP <= 0)
         {
             gameManager.instance.enemyDecrement();
             Destroy(gameObject);
+        }
+
+        if (!playerInRange)
+        {
+            agent.SetDestination(lastPlayerPos);
+            //agent.SetPath();
         }
     }
 
@@ -165,6 +177,7 @@ public class enemyAI : MonoBehaviour, IDamageable
             else
             {
                 hasSeen = false;
+                //roam();
             }
         }
     }
