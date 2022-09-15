@@ -8,6 +8,7 @@ public class enemyAI : MonoBehaviour, IDamageable
     [Header("----- Components -----")]
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Renderer rend;
+    [SerializeField] Animator anim;
 
     [Header("----- Enemy Stats -----")]
     [Range(0, 100)] [SerializeField] int HP;
@@ -16,6 +17,7 @@ public class enemyAI : MonoBehaviour, IDamageable
     [Range(1, 10)] [SerializeField] int playerFaceSpeed;
     [Range(1, 50)] [SerializeField] int roamRadius;
     [Range(1, 180)] [SerializeField] int viewAngle;
+    [SerializeField] GameObject headPosition;
 
 
     [Header("----- Weapon Stats -----")]
@@ -24,47 +26,54 @@ public class enemyAI : MonoBehaviour, IDamageable
     [SerializeField] Transform shootPos;
 
     Vector3 playerDir;
+    bool takingDamage;
     bool isShooting;
     bool playerInRange;
     Vector3 lastPlayerPos;
     float stoppingDistOrig;
     bool hasSeen; //Made this to see where the player was when breaking LOS
     Vector3 startingPos;
+    int speedOrig;
     bool roamPathValid;
     float angle;
     bool isDmg;
 
     private void Start()
     {
-        gameManager.instance.enemyIncrement();
+        //gameManager.instance.enemyIncrement();
         lastPlayerPos = transform.position;
         stoppingDistOrig = agent.stoppingDistance;
         speedRoam = agent.speed;
+        //speedOrig = agent.speed;
         startingPos = transform.position;
     }
 
     void Update()
     {
-        playerDir = gameManager.instance.player.transform.position - transform.position;
-
-        if (playerInRange)
+        if (agent.enabled)
         {
-            //if(angle > viewAngle && agent.stoppingDistance != 0) - Student's code from class
-                //facePlayer();
-            
-            rayToPlayer();
-            
+            playerDir = gameManager.instance.player.transform.position - transform.position;
+            anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agent.velocity.normalized.magnitude, Time.deltaTime * 4));
+
+            if (!takingDamage)
+            {
+                if (playerInRange)
+                {
+                    //if(angle > viewAngle && agent.stoppingDistance != 0) - Student's code from class
+                    //facePlayer();
+
+                    rayToPlayer();
+
+                }
+
+                if (agent.remainingDistance < 0.001f && agent.destination != gameManager.instance.player.transform.position)
+                {
+                    roam();
+                    //agent.SetDestination(lastPlayerPos);
+                    //agent.stoppingDistance = 0;
+                }
+            }
         }
-
-        if(agent.remainingDistance < 0.001f && agent.destination != gameManager.instance.player.transform.position)
-        {
-            roam();
-            //agent.SetDestination(lastPlayerPos);
-            //agent.stoppingDistance = 0;
-        }
-
-        
-
     }
 
     void roam()
@@ -110,30 +119,37 @@ public class enemyAI : MonoBehaviour, IDamageable
 
     public void takeDamage(int dmg)
     {
-        HP -= dmg;
         
+        HP -= dmg;
+        anim.SetTrigger("Damage");
+        agent.speed = 0;
+
         StartCoroutine(flashColor());
         lastPlayerPos = gameManager.instance.player.transform.position;
 
-        
-        if (HP <= 0)
+        if(HP <= 0 && agent.enabled)
         {
-            gameManager.instance.enemyDecrement();
-            Destroy(gameObject);
+            enemyDead();
         }
+        
 
         if (!playerInRange)
         {
             agent.SetDestination(lastPlayerPos);
             //agent.SetPath();
         }
+        
     }
 
     IEnumerator flashColor()
     {
+        takingDamage = true;
         rend.material.color = Color.red;
+        agent.speed = 0;
         yield return new WaitForSeconds(0.1f);
         rend.material.color = Color.white;
+        agent.speed = speedRoam;
+        takingDamage = false;
     }
 
     IEnumerator shoot()
@@ -151,9 +167,10 @@ public class enemyAI : MonoBehaviour, IDamageable
         float angle = Vector3.Angle(playerDir, transform.forward);
 
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, playerDir, out hit))
+        if (Physics.Raycast(transform.position + transform.up, playerDir, out hit))
         {
-            Debug.DrawRay(transform.position, playerDir);
+            Debug.DrawRay(transform.position + transform.up, playerDir);
+
             if (hit.collider.CompareTag("Player") && angle <= viewAngle)
             {
                 hasSeen = true;
@@ -188,5 +205,20 @@ public class enemyAI : MonoBehaviour, IDamageable
         //Added to fix bug: OnCollisionExit not being called when player dies
         
         playerInRange = false;
+        agent.stoppingDistance = 0;
+        roam();
+    }
+
+    void enemyDead()
+    {
+         gameManager.instance.enemyDecrement();
+
+        anim.SetBool("Dead", true);
+        agent.enabled = false;
+
+        //foreach (Collider col in GetComponent<Collider>())
+            //col.enabled = false;
+
+        
     }
 }

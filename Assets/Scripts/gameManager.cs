@@ -98,9 +98,9 @@ public class gameManager : MonoBehaviour
         StartCoroutine(checkEnemyCount());
     }
 
-    public void enemyIncrement()
+    public void enemyIncrement(int amount)
     {
-        enemyCount++;
+        enemyCount += amount;
         enemyCounter.text = enemyCount.ToString("F0");
     }
 
