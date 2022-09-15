@@ -55,7 +55,8 @@ public class enemyAI : MonoBehaviour, IDamageable
             rayToPlayer();
             
         }
-        else if(agent.remainingDistance < 0.001f)
+
+        if(agent.remainingDistance < 0.001f && agent.destination != gameManager.instance.player.transform.position)
         {
             roam();
             //agent.SetDestination(lastPlayerPos);
