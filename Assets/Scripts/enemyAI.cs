@@ -216,9 +216,7 @@ public class enemyAI : MonoBehaviour, IDamageable
         anim.SetBool("Dead", true);
         agent.enabled = false;
 
-        //foreach (Collider col in GetComponent<Collider>())
-            //col.enabled = false;
-
-        
+        foreach (Collider col in GetComponents<Collider>())
+            col.enabled = false;
     }
 }
