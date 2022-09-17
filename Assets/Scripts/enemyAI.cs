@@ -24,11 +24,12 @@ public class enemyAI : MonoBehaviour, IDamageable
     [SerializeField] float shootRate;
     [SerializeField] GameObject bullet;
     [SerializeField] Transform shootPos;
+    [SerializeField] float shootDist;
 
     Vector3 playerDir;
     bool takingDamage;
     bool isShooting;
-    bool playerInRange;
+    bool playerIsSeen;
     Vector3 lastPlayerPos;
     float stoppingDistOrig;
     bool hasSeen; //Made this to see where the player was when breaking LOS
@@ -37,6 +38,7 @@ public class enemyAI : MonoBehaviour, IDamageable
     bool roamPathValid;
     float angle;
     bool isDmg;
+    
 
     private void Start()
     {
@@ -57,7 +59,7 @@ public class enemyAI : MonoBehaviour, IDamageable
 
             if (!takingDamage)
             {
-                if (playerInRange)
+                if (playerIsSeen)
                 {
                     //if(angle > viewAngle && agent.stoppingDistance != 0) - Student's code from class
                     //facePlayer();
@@ -96,14 +98,14 @@ public class enemyAI : MonoBehaviour, IDamageable
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
-            playerInRange = true;
+            playerIsSeen = true;
     }
 
      void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            playerInRange = false;
+            playerIsSeen = false;
             lastPlayerPos = gameManager.instance.player.transform.position;
             agent.stoppingDistance = 0;
             hasSeen = false;
@@ -133,7 +135,7 @@ public class enemyAI : MonoBehaviour, IDamageable
         }
         
 
-        if (!playerInRange)
+        if (!playerIsSeen)
         {
             agent.SetDestination(lastPlayerPos);
             //agent.SetPath();
@@ -182,8 +184,24 @@ public class enemyAI : MonoBehaviour, IDamageable
                 facePlayer();
                 //if (agent.stoppingDistance >= agent.remainingDistance) //Changed <= to >=
 
-                if (!isShooting)
+
+                //If the player gets too close to the enemy the enemy backs away
+
+                /*if(agent.remainingDistance < agent.stoppingDistance * .25) 
+                {
+                    NavMeshHit Hit;
+                    NavMesh.SamplePosition({Move away from player unless an object is blocking you}, out Hit, 1, 1);
+                    NavMeshPath path = new NavMeshPath();
+
+                    agent.CalculatePath(hit.position, path);
+                    agent.SetPath(path);
+                }*/
+
+                if (!isShooting && agent.remainingDistance <= shootDist)
+                {
                     StartCoroutine(shoot());
+                    Debug.Log("Enemy shooting");
+                }
             }
             else if (hasSeen == true)
             {
@@ -203,8 +221,8 @@ public class enemyAI : MonoBehaviour, IDamageable
     public void playerDied()
     {
         //Added to fix bug: OnCollisionExit not being called when player dies
-        
-        playerInRange = false;
+
+        playerIsSeen = false;
         agent.stoppingDistance = 0;
         roam();
     }
