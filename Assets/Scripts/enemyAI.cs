@@ -61,7 +61,7 @@ public class enemyAI : MonoBehaviour, IDamageable
             {
                 if (playerIsSeen)
                 {
-                    //if(angle > viewAngle && agent.stoppingDistance != 0) - Student's code from class
+                    //if(angle > viewAngle && agent.stoppingDistance != 0) // Student's code from class
                     //facePlayer();
 
                     rayToPlayer();
@@ -150,7 +150,7 @@ public class enemyAI : MonoBehaviour, IDamageable
         agent.speed = 0;
         yield return new WaitForSeconds(0.1f);
         rend.material.color = Color.white;
-        agent.speed = speedRoam;
+        agent.speed = speedChase;
         takingDamage = false;
     }
 
@@ -172,7 +172,7 @@ public class enemyAI : MonoBehaviour, IDamageable
         if (Physics.Raycast(transform.position + transform.up, playerDir, out hit))
         {
             Debug.DrawRay(transform.position + transform.up, playerDir);
-
+            agent.speed = speedChase;
             if (hit.collider.CompareTag("Player") && angle <= viewAngle)
             {
                 hasSeen = true;
@@ -183,24 +183,28 @@ public class enemyAI : MonoBehaviour, IDamageable
 
                 facePlayer();
                 //if (agent.stoppingDistance >= agent.remainingDistance) //Changed <= to >=
-
+                //if (agent.remainingDistance <= agent.stoppingDistance)
+                    
 
                 //If the player gets too close to the enemy the enemy backs away
 
-                /*if(agent.remainingDistance < agent.stoppingDistance * .25) 
+                /*if(agent.remainingDistance < agent.stoppingDistance * .75) 
                 {
                     NavMeshHit Hit;
-                    NavMesh.SamplePosition({Move away from player unless an object is blocking you}, out Hit, 1, 1);
+                    NavMesh.SamplePosition(playerDir * -1, out Hit, 1, 1);
                     NavMeshPath path = new NavMeshPath();
 
-                    agent.CalculatePath(hit.position, path);
+                    agent.CalculatePath(Hit.position, path);
                     agent.SetPath(path);
                 }*/
+
+                //if not already shooting and the remaing distance from the player is less than or equal to the shoot 
+                //Distance of the enemy then open fire.
 
                 if (!isShooting && agent.remainingDistance <= shootDist)
                 {
                     StartCoroutine(shoot());
-                    Debug.Log("Enemy shooting");
+                    //Debug.Log("Enemy shooting");
                 }
             }
             else if (hasSeen == true)
@@ -209,10 +213,10 @@ public class enemyAI : MonoBehaviour, IDamageable
                 //Just like exiting the range, but instead exiting sight
                 agent.SetDestination(lastPlayerPos);
                 agent.stoppingDistance = 0;
+                hasSeen = false;
             }
             else
             {
-                hasSeen = false;
                 //roam();
             }
         }
@@ -234,6 +238,7 @@ public class enemyAI : MonoBehaviour, IDamageable
         anim.SetBool("Dead", true);
         agent.enabled = false;
 
+        //Turn off all the enemy collision models.
         foreach (Collider col in GetComponents<Collider>())
             col.enabled = false;
     }
