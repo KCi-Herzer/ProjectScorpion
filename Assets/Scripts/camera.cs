@@ -11,6 +11,7 @@ public class camera : MonoBehaviour
     [SerializeField] int lockVertMax;
 
     [SerializeField] bool invert;
+    [Range(0, 100)] [SerializeField] float tiltDistance;
 
     float xRotation;
 
@@ -38,7 +39,28 @@ public class camera : MonoBehaviour
         transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
 
         //rotate the player
-        transform.parent.Rotate(Vector3.up * mouseX);
+        transform.parent.parent.Rotate(Vector3.up * mouseX);
+
+
+        if (Input.GetButtonDown("TiltR"))
+        {
+            transform.parent.localRotation = Quaternion.Euler(0, 0, -tiltDistance);
+        }
+        else if (Input.GetButtonUp("TiltR"))
+        {
+            transform.parent.localRotation = Quaternion.Euler(0, 0, 0);
+        }
+
+        if (Input.GetButtonDown("TiltL"))
+        {
+            transform.parent.localRotation = Quaternion.Euler(0, 0, tiltDistance);
+        }
+        else if (Input.GetButtonUp("TiltL"))
+        {
+            transform.parent.localRotation = Quaternion.Euler(0, 0, 0);
+        }
 
     }
+
+    
 }
