@@ -21,7 +21,9 @@ public class playerController : MonoBehaviour, IDamageable
     [SerializeField] int Auto; 
     [SerializeField] List<Gun> gunStats = new List<Gun>();
     [SerializeField] GameObject gunModel;
+    
     int currentAmmo;
+    
     //int ammoCap; not used
 
     [Header("----- Audio -----")]
@@ -97,6 +99,8 @@ public class playerController : MonoBehaviour, IDamageable
 
         playerVelocity.y -= gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
+
+        
     }
 
     void sprint()

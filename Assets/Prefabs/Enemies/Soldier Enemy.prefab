@@ -488,6 +488,7 @@ MonoBehaviour:
   shootRate: 0.2
   bullet: {fileID: 1304199123426473368, guid: 4d8f8ed30ef12b94fb06533d6341130e, type: 3}
   shootPos: {fileID: 5309509022072432732}
+  shootDist: 35
 --- !u!95 &5309509022079846282
 Animator:
   serializedVersion: 4
@@ -555,7 +556,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 15
+  m_Radius: 70
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5309509022072468544
 GameObject:
