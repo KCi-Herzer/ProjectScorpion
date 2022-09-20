@@ -30,6 +30,8 @@ public class gameManager : MonoBehaviour
     public bool isPaused;
     float timeScaleOrig;
 
+    
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -40,6 +42,7 @@ public class gameManager : MonoBehaviour
         playerSpawnPos = GameObject.Find("Player Spawn Pos");
 
         timeScaleOrig = Time.timeScale;
+        //countCurrentEnemies(0);
     }
 
     // Update is called once per frame
@@ -100,8 +103,18 @@ public class gameManager : MonoBehaviour
 
     public void enemyIncrement(int amount)
     {
-        enemyCount += amount;
+        enemyCount++;
         enemyCounter.text = enemyCount.ToString("F0");
+    }
+
+    public void countCurrentEnemies(int amount)
+    {
+        //foreach (enemyAI enemy in currentEnemys)
+        foreach (enemyAI enemy in GetComponents<enemyAI>())
+        {
+            enemyCount += amount;
+            enemyCounter.text = enemyCount.ToString("F0");
+        }
     }
 
     IEnumerator checkEnemyCount()
@@ -114,6 +127,4 @@ public class gameManager : MonoBehaviour
             cursorLockPause();
         }
     }
-
-    
 }

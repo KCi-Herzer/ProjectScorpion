@@ -12,10 +12,10 @@ public class enemyAI : MonoBehaviour, IDamageable
 
     [Header("----- Enemy Stats -----")]
     [Range(0, 100)] [SerializeField] int HP;
-    [Range(1, 10)] [SerializeField] float speedRoam;
-    [Range(1, 10)] [SerializeField] float speedChase;
-    [Range(1, 10)] [SerializeField] int playerFaceSpeed;
-    [Range(1, 50)] [SerializeField] int roamRadius;
+    [Range(0, 10)] [SerializeField] float speedRoam;
+    [Range(0, 10)] [SerializeField] float speedChase;
+    [Range(0, 10)] [SerializeField] int playerFaceSpeed;
+    [Range(0, 50)] [SerializeField] int roamRadius;
     [Range(1, 180)] [SerializeField] int viewAngle;
     [SerializeField] GameObject headPosition;
 
@@ -25,6 +25,9 @@ public class enemyAI : MonoBehaviour, IDamageable
     [SerializeField] GameObject bullet;
     [SerializeField] Transform shootPos;
     [SerializeField] float shootDist;
+
+    [Header("----- Enemy Drops -----")]
+    [SerializeField] GameObject enemyDrop;
 
     Vector3 playerDir;
     bool takingDamage;
@@ -54,7 +57,7 @@ public class enemyAI : MonoBehaviour, IDamageable
     {
         if (agent.enabled)
         {
-            playerDir = gameManager.instance.player.transform.position - transform.position;
+            playerDir = gameManager.instance.player.transform.position - headPosition.transform.position;
             anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agent.velocity.normalized.magnitude, Time.deltaTime * 4));
 
             if (!takingDamage)
@@ -169,9 +172,11 @@ public class enemyAI : MonoBehaviour, IDamageable
         float angle = Vector3.Angle(playerDir, transform.forward);
 
         RaycastHit hit;
-        if (Physics.Raycast(transform.position + transform.up, playerDir, out hit))
+        if (Physics.Raycast(headPosition.transform.position, playerDir, out hit))
         {
-            Debug.DrawRay(transform.position + transform.up, playerDir);
+#if UNITY_EDITOR
+            Debug.DrawRay(headPosition.transform.position, playerDir);
+#endif
             agent.speed = speedChase;
             if (hit.collider.CompareTag("Player") && angle <= viewAngle)
             {
@@ -237,6 +242,8 @@ public class enemyAI : MonoBehaviour, IDamageable
 
         anim.SetBool("Dead", true);
         agent.enabled = false;
+
+        Instantiate(enemyDrop, transform.position, enemyDrop.transform.rotation);
 
         //Turn off all the enemy collision models.
         foreach (Collider col in GetComponents<Collider>())

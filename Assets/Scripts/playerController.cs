@@ -254,6 +254,12 @@ public class playerController : MonoBehaviour, IDamageable
         }
     }
 
+    public void gainHealth(int amount)
+    {
+        HP += amount;
+        updatePlayerHP();
+    }
+
     IEnumerator damageFlash()
     {
         gameManager.instance.playerDamage.SetActive(true);
