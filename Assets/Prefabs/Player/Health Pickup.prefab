@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1095680379582416469}
   - component: {fileID: 1095680379582416468}
   m_Layer: 0
-  m_Name: Ammo count 2
+  m_Name: Health count 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -144,10 +144,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1095680379832393752}
-  - component: {fileID: 1095680379832393754}
+  - component: {fileID: -2753089391661654517}
   - component: {fileID: 1095680379832393753}
   m_Layer: 0
-  m_Name: Ammo Pickup
+  m_Name: Health Pickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -161,7 +161,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1095680379832393759}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 8.575, y: 0.651, z: 0.172}
+  m_LocalPosition: {x: 8.532, y: 0.651, z: 0.172}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -169,7 +169,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1095680379832393754
+--- !u!114 &-2753089391661654517
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -178,13 +178,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1095680379832393759}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c20e8f7bc0028b8448128129e7c6717c, type: 3}
+  m_Script: {fileID: 11500000, guid: 7942746222b324d4585177cdf598d8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ammoAmount: 10
+  healthGain: 50
   countLables:
-  - {fileID: 1095680381485027379}
   - {fileID: 1095680379582416468}
+  - {fileID: 1095680381485027379}
 --- !u!135 &1095680379832393753
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -365,7 +365,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: AMMO
+  m_text: Health
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -601,7 +601,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: AMMO
+  m_text: Health
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -985,7 +985,7 @@ GameObject:
   - component: {fileID: 1095680381485027378}
   - component: {fileID: 1095680381485027379}
   m_Layer: 0
-  m_Name: Ammo count 1
+  m_Name: Health count 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

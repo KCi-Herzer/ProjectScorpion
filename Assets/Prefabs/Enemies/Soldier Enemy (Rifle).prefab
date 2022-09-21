@@ -440,7 +440,7 @@ GameObject:
   - component: {fileID: 5309509022072432731}
   - component: {fileID: 5309509022072432729}
   m_Layer: 7
-  m_Name: Soldier Enemy
+  m_Name: Soldier Enemy (Rifle)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -481,14 +481,15 @@ MonoBehaviour:
   HP: 50
   speedRoam: 3
   speedChase: 5
-  playerFaceSpeed: 4
-  roamRadius: 35
+  playerFaceSpeed: 9
+  roamRadius: 25
   viewAngle: 45
   headPosition: {fileID: 5309509022072468556}
   shootRate: 0.2
   bullet: {fileID: 1304199123426473368, guid: 4d8f8ed30ef12b94fb06533d6341130e, type: 3}
   shootPos: {fileID: 5309509022072432732}
   shootDist: 35
+  enemyDrop: {fileID: 1095680379832393759, guid: 651cbee12cc54104692939ff668a0232, type: 3}
 --- !u!95 &5309509022079846282
 Animator:
   serializedVersion: 4
