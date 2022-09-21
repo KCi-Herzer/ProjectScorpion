@@ -41,7 +41,17 @@ public class camera : MonoBehaviour
         //rotate the player
         transform.parent.parent.Rotate(Vector3.up * mouseX);
 
+        if (!gameManager.instance.isPaused)
+        {
+            Tilt();
+        }
 
+        
+
+    }
+
+    void Tilt()
+    {
         if (Input.GetButtonDown("TiltR"))
         {
             transform.parent.localRotation = Quaternion.Euler(0, 0, -tiltDistance);
@@ -59,7 +69,6 @@ public class camera : MonoBehaviour
         {
             transform.parent.localRotation = Quaternion.Euler(0, 0, 0);
         }
-
     }
 
     

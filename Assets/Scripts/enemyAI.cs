@@ -27,7 +27,8 @@ public class enemyAI : MonoBehaviour, IDamageable
     [SerializeField] float shootDist;
 
     [Header("----- Enemy Drops -----")]
-    [SerializeField] GameObject enemyDrop;
+    [Header("optional")]
+    [SerializeField] GameObject enemyDrop; 
 
     Vector3 playerDir;
     bool takingDamage;
@@ -93,9 +94,13 @@ public class enemyAI : MonoBehaviour, IDamageable
         NavMeshHit hit;
         NavMesh.SamplePosition(randomDir, out hit, 1, 1);
         NavMeshPath path = new NavMeshPath();
+
+        if (hit.hit) //Fix for Infinity Bug
+        {
+            agent.CalculatePath(hit.position, path);
+            agent.SetPath(path);
+        }
         
-        agent.CalculatePath(hit.position, path);
-        agent.SetPath(path);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -243,7 +248,11 @@ public class enemyAI : MonoBehaviour, IDamageable
         anim.SetBool("Dead", true);
         agent.enabled = false;
 
-        Instantiate(enemyDrop, transform.position, enemyDrop.transform.rotation);
+        if(enemyDrop != null) //Removes null reference for enemies that don't drop items
+        {
+            Instantiate(enemyDrop, transform.position, enemyDrop.transform.rotation);
+        }
+        
 
         //Turn off all the enemy collision models.
         foreach (Collider col in GetComponents<Collider>())

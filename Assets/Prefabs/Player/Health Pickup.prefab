@@ -144,8 +144,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1095680379832393752}
-  - component: {fileID: -2753089391661654517}
   - component: {fileID: 1095680379832393753}
+  - component: {fileID: 8578026814740966483}
   m_Layer: 0
   m_Name: Health Pickup
   m_TagString: Untagged
@@ -169,22 +169,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-2753089391661654517
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1095680379832393759}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7942746222b324d4585177cdf598d8c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  healthGain: 50
-  countLables:
-  - {fileID: 1095680379582416468}
-  - {fileID: 1095680381485027379}
 --- !u!135 &1095680379832393753
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -198,6 +182,22 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8578026814740966483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1095680379832393759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7942746222b324d4585177cdf598d8c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthGain: 10
+  countLables:
+  - {fileID: 1095680381485027379}
+  - {fileID: 1095680379582416468}
 --- !u!1 &1095680380040162802
 GameObject:
   m_ObjectHideFlags: 0
@@ -500,7 +500,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: fe52ad30ec57e5444aaaf5e81b1ae050, type: 2}
+  - {fileID: 2100000, guid: f4cb2a167bf1d114b943bed02bc98a47, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
