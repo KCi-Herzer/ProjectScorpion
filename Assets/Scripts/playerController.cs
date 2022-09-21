@@ -21,6 +21,7 @@ public class playerController : MonoBehaviour, IDamageable
     [SerializeField] int Auto; 
     [SerializeField] List<Gun> gunStats = new List<Gun>();
     [SerializeField] GameObject gunModel;
+    [SerializeField] List<GameObject> gunInHand;
     
     int currentAmmo;
     
@@ -135,6 +136,10 @@ public class playerController : MonoBehaviour, IDamageable
 
     public void gunPickup(Gun stats)
     {
+        if(hasGun == true)
+        {
+            gunInHand[gunStats[selectedGun].weaponInt].SetActive(false); //Changes the model
+        }
         hasGun = true;
         shootrate = stats.shootrate;
         shootDamage = stats.shootDamage;
@@ -142,9 +147,11 @@ public class playerController : MonoBehaviour, IDamageable
 
         stats.setStartingAmmo();
         currentAmmo = stats.getAmmoCount;
-        
-        gunModel.GetComponent<MeshFilter>().sharedMesh = stats.model.GetComponent<MeshFilter>().sharedMesh;
-        gunModel.GetComponent<MeshRenderer>().sharedMaterial = stats.model.GetComponent<MeshRenderer>().sharedMaterial;
+
+        gunInHand[stats.weaponInt].SetActive(true); //Changes the model
+
+        //gunModel.GetComponent<MeshFilter>().sharedMesh = stats.model.GetComponent<MeshFilter>().sharedMesh;
+        //gunModel.GetComponent<MeshRenderer>().sharedMaterial = stats.model.GetComponent<MeshRenderer>().sharedMaterial;
 
         gunStats.Add(stats);
         selectedGun = gunStats.Count - 1;
@@ -165,7 +172,9 @@ public class playerController : MonoBehaviour, IDamageable
         {
             if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectedGun < gunStats.Count - 1)
             {
+                gunInHand[gunStats[selectedGun].weaponInt].SetActive(false); //Changes the model
                 selectedGun++;
+                gunInHand[gunStats[selectedGun].weaponInt].SetActive(true); //Changes the model
                 shootrate = gunStats[selectedGun].shootrate;
                 shootdist = gunStats[selectedGun].shootdist;
                 shootDamage = gunStats[selectedGun].shootDamage;
@@ -177,12 +186,15 @@ public class playerController : MonoBehaviour, IDamageable
 
                 updateAmmoUI();
 
-                gunModel.GetComponent<MeshFilter>().sharedMesh = gunStats[selectedGun].model.GetComponent<MeshFilter>().sharedMesh;
-                gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunStats[selectedGun].model.GetComponent<MeshRenderer>().sharedMaterial;
+                
+                //gunModel.GetComponent<MeshFilter>().sharedMesh = gunStats[selectedGun].model.GetComponent<MeshFilter>().sharedMesh;
+                //gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunStats[selectedGun].model.GetComponent<MeshRenderer>().sharedMaterial;
             }
             else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedGun > 0)
             {
+                gunInHand[gunStats[selectedGun].weaponInt].SetActive(false); //Changes the model
                 selectedGun--;
+                gunInHand[gunStats[selectedGun].weaponInt].SetActive(true); //Changes the model
                 shootrate = gunStats[selectedGun].shootrate;
                 shootdist = gunStats[selectedGun].shootdist;
                 shootDamage = gunStats[selectedGun].shootDamage;
@@ -191,8 +203,8 @@ public class playerController : MonoBehaviour, IDamageable
 
                 updateAmmoUI();
 
-                gunModel.GetComponent<MeshFilter>().sharedMesh = gunStats[selectedGun].model.GetComponent<MeshFilter>().sharedMesh;
-                gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunStats[selectedGun].model.GetComponent<MeshRenderer>().sharedMaterial;
+                //gunModel.GetComponent<MeshFilter>().sharedMesh = gunStats[selectedGun].model.GetComponent<MeshFilter>().sharedMesh;
+                //gunModel.GetComponent<MeshRenderer>().sharedMaterial = gunStats[selectedGun].model.GetComponent<MeshRenderer>().sharedMaterial;
             }
         }
     }

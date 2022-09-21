@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be1be2ec9c6196f499b97b9059d52f9b, type: 3}
+  m_Name: PlasmaTosser
+  m_EditorClassIdentifier: 
+  shootrate: 0.3
+  shootdist: 400
+  shootDamage: 45
+  ammoCap: 10
+  Auto: 1
+  model: {fileID: 4796965006156008918, guid: 0b78281bde1348f49a4bde7bad555491, type: 3}
+  sound: {fileID: 8300000, guid: e9e0730dffc41ae46906a95f4461d430, type: 3}
+  hitEffect: {fileID: 5561056090582857348, guid: 7e648a42c56eff445b76786110ce1763, type: 3}
+  weaponInt: 4
