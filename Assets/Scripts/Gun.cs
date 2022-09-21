@@ -16,6 +16,7 @@ public class Gun : ScriptableObject
     public GameObject model;
     public AudioClip sound;
     public GameObject hitEffect;
+    public int weaponInt; //To match the player weapon in hand in the player controller
 
     int currentAmmo;
 
