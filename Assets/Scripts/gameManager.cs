@@ -22,6 +22,7 @@ public class gameManager : MonoBehaviour
 
     public Image HPBar;
     public TMP_Text enemyCounter;
+    public TMP_Text waveCounter;
 
     public TMP_Text ammoCounter;
 
@@ -122,9 +123,13 @@ public class gameManager : MonoBehaviour
         if (enemyCount <= 0)
         {
             yield return new WaitForSeconds(2);
-            menuCurrentlyOpen = winMenu;
-            menuCurrentlyOpen.SetActive(true);
-            cursorLockPause();
+            //menuCurrentlyOpen = winMenu;
+            //menuCurrentlyOpen.SetActive(true);
+            //cursorLockPause();
+
+            //The game manager tell the waveManager to start the next round
+            waveManager.instance.NextWave();
+            
         }
     }
 }
