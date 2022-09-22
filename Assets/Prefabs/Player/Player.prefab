@@ -363,7 +363,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 5000
   field of view: 75
   orthographic: 0
   orthographic size: 5
@@ -1673,6 +1673,7 @@ GameObject:
   - component: {fileID: 8617749042347710660}
   - component: {fileID: 7441575336775155582}
   - component: {fileID: 4741837934581849023}
+  - component: {fileID: 1673991217}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -1709,7 +1710,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 8617749042347710660}
-  HP: 15
+  HP: 50
   playerSpeed: 10
   sprintMulti: 2
   gravityValue: 25
@@ -1741,7 +1742,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: fcfcc5f25eb0bf947b0cb23659372d08, type: 3}
   - {fileID: 8300000, guid: c47d615f29083854cb686317f68e2e9a, type: 3}
   - {fileID: 8300000, guid: 55b778d52c0477548961302dc54bdb5c, type: 3}
-  playerJumpSoundVol: 0.5
+  playerJumpSoundVol: 0.1
   playerFootstepsSound:
   - {fileID: 8300000, guid: f77f5b0bda8cd1f4a9b8ea21885a87df, type: 3}
   - {fileID: 8300000, guid: eace764cac34d054da8f48343564e611, type: 3}
@@ -1752,7 +1753,16 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 24adb09c08000424e88ba57670c523a7, type: 3}
   - {fileID: 8300000, guid: 732dc1a1bb9702440ba966282934d804, type: 3}
   - {fileID: 8300000, guid: 2047059f09d362e4086d338f514a288a, type: 3}
-  playerFootstepsSoundVol: 0.5
+  playerFootstepsSoundVol: 0.1
+  healthPickupSound:
+  - {fileID: 8300000, guid: 6189bfa1bcbf89d4aa5307e4706a29f8, type: 3}
+  healthPickupSoundVol: 0.5
+  ammoPickupSound:
+  - {fileID: 8300000, guid: a457ff7d8d45f814681719d22cd5453a, type: 3}
+  ammoPickupSoundVol: 0.5
+  weaponSwapSound:
+  - {fileID: 8300000, guid: e5d65276b61858c49baeafe955362020, type: 3}
+  weaponSwapSoundVol: 0.5
   playerDamageFlashTime: 0.1
   isShooting: 0
   hasGun: 0
@@ -1920,6 +1930,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!136 &1673991217
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5325371353639695690}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5494318534897410404
 GameObject:
   m_ObjectHideFlags: 0

@@ -42,6 +42,15 @@ public class playerController : MonoBehaviour, IDamageable
     [SerializeField] AudioClip[] playerFootstepsSound;
     [Range(0, 1)] [SerializeField] float playerFootstepsSoundVol;
 
+    [SerializeField] AudioClip[] healthPickupSound;
+    [Range(0, 1)] [SerializeField] float healthPickupSoundVol;
+
+    [SerializeField] AudioClip[] ammoPickupSound;
+    [Range(0, 1)] [SerializeField] float ammoPickupSoundVol;
+
+    [SerializeField] AudioClip[] weaponSwapSound;
+    [Range(0, 1)] [SerializeField] float weaponSwapSoundVol;
+
     [Header("-----UI Settings-----")]
     [SerializeField] float playerDamageFlashTime;
 
@@ -136,7 +145,8 @@ public class playerController : MonoBehaviour, IDamageable
 
     public void gunPickup(Gun stats)
     {
-        if(hasGun == true)
+        aud.PlayOneShot(weaponSwapSound[Random.Range(0, weaponSwapSound.Length)], weaponSwapSoundVol);
+        if (hasGun == true)
         {
             gunInHand[gunStats[selectedGun].weaponInt].SetActive(false); //Changes the model
         }
@@ -161,6 +171,7 @@ public class playerController : MonoBehaviour, IDamageable
 
     public void ammoPickup(int ammoAmount)
     {
+        aud.PlayOneShot(ammoPickupSound[Random.Range(0, ammoPickupSound.Length)], ammoPickupSoundVol);
         currentAmmo += ammoAmount;
         gunStats[selectedGun].getAmmoCount = currentAmmo;
         updateAmmoUI();
@@ -172,6 +183,7 @@ public class playerController : MonoBehaviour, IDamageable
         {
             if (Input.GetAxis("Mouse ScrollWheel") > 0 && selectedGun < gunStats.Count - 1)
             {
+                aud.PlayOneShot(weaponSwapSound[Random.Range(0, weaponSwapSound.Length)], weaponSwapSoundVol);
                 gunInHand[gunStats[selectedGun].weaponInt].SetActive(false); //Changes the model
                 selectedGun++;
                 gunInHand[gunStats[selectedGun].weaponInt].SetActive(true); //Changes the model
@@ -192,6 +204,7 @@ public class playerController : MonoBehaviour, IDamageable
             }
             else if (Input.GetAxis("Mouse ScrollWheel") < 0 && selectedGun > 0)
             {
+                aud.PlayOneShot(weaponSwapSound[Random.Range(0, weaponSwapSound.Length)], weaponSwapSoundVol);
                 gunInHand[gunStats[selectedGun].weaponInt].SetActive(false); //Changes the model
                 selectedGun--;
                 gunInHand[gunStats[selectedGun].weaponInt].SetActive(true); //Changes the model
@@ -269,6 +282,7 @@ public class playerController : MonoBehaviour, IDamageable
     public void gainHealth(int amount)
     {
         HP += amount;
+        aud.PlayOneShot(healthPickupSound[Random.Range(0, healthPickupSound.Length)], healthPickupSoundVol);
         updatePlayerHP();
     }
 

@@ -588,16 +588,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   meleeEnemy: {fileID: 2632099088587457815, guid: 6f685d6ebbf0c04418b15fb68d3750e3, type: 3}
   rangeEnemy: {fileID: 5309509022072468542, guid: 8ed4ba443e5fe5c47b016cfdbfb03519, type: 3}
-  bossEnemy: {fileID: 0}
+  bossEnemy: {fileID: 5309509022072468542, guid: c7046c86cd000a54eb5c2fab7f245ed3, type: 3}
   meleeEnemyInitial: 5
-  rangeEnemyInitial: 0
-  meleeEnemyFreq: 0.5
-  rangeEnemyFreq: 0.10000000149011612
+  rangeEnemyInitial: 5
+  meleeEnemyFreq: 1
+  rangeEnemyFreq: 0.5
   bossSpawnInterval: 5
   spawnTimer: 3
   currentWave: 0
-  isRanged: 0
-  isMelee: 0
 --- !u!1 &78103182849632932
 GameObject:
   m_ObjectHideFlags: 0
@@ -1216,7 +1214,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -135.79999, y: -986}
+  m_AnchoredPosition: {x: -235, y: -81}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7303923456802919691
@@ -1274,8 +1272,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 22
-  m_fontSizeBase: 22
+  m_fontSize: 35
+  m_fontSizeBase: 35
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2995,10 +2993,11 @@ MonoBehaviour:
   HPBar: {fileID: 7909990128579856361}
   enemyCounter: {fileID: 162103386}
   waveCounter: {fileID: 8458957562230251712}
-  gameObjectives: {fileID: 0}
+  gameObjectives: {fileID: 7572286837834547267}
   ammoCounter: {fileID: 1208516788}
+  timeBetweenRounds: 10
   enemyCount: 16
-  totalObjectives: 0
+  totalObjectives: 4
   isPaused: 0
 --- !u!1 &5438545136737136924
 GameObject:
