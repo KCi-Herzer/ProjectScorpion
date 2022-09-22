@@ -30,6 +30,19 @@ public class meleeEnemyAI : MonoBehaviour, IDamageable
     [Header("optional")]
     [SerializeField] GameObject enemyDrop;
 
+    [Header("----- Audio -----")]
+
+    [SerializeField] AudioSource aud;
+
+    [SerializeField] AudioClip[] enemyDamageSound;
+    [Range(0, 1)] [SerializeField] float enemyDamageSoundVol;
+
+    [SerializeField] AudioClip[] enemyDeathSound;
+    [Range(0, 1)] [SerializeField] float enemyDeathSoundVol;
+
+    [SerializeField] AudioClip[] enemyAttackSound;
+    [Range(0, 1)] [SerializeField] float enemyAttackSoundVol;
+
     Vector3 playerDir;
     bool takingDamage;
     bool isMeleeing;
@@ -74,6 +87,7 @@ public class meleeEnemyAI : MonoBehaviour, IDamageable
         agent.stoppingDistance = 0;
         agent.speed = speedRoam;
 
+        
         Vector3 randomDir = Random.insideUnitSphere * roamRadius;
         randomDir += startingPos;
 
@@ -115,6 +129,7 @@ public class meleeEnemyAI : MonoBehaviour, IDamageable
     public void takeDamage(int dmg)
     {
         HP -= dmg;
+        aud.PlayOneShot(enemyDamageSound[Random.Range(0, enemyDamageSound.Length)], enemyDamageSoundVol);
         anim.SetTrigger("Damage");
         agent.speed = 0;
 
@@ -148,6 +163,7 @@ public class meleeEnemyAI : MonoBehaviour, IDamageable
     {
         isMeleeing = true;
         anim.SetTrigger("Attack");
+        aud.PlayOneShot(enemyAttackSound[Random.Range(0, enemyAttackSound.Length)], enemyAttackSoundVol);
         Instantiate(meleeCube, hitPos.position, transform.rotation);
         yield return new WaitForSeconds(attackRate);
 
@@ -210,6 +226,7 @@ public class meleeEnemyAI : MonoBehaviour, IDamageable
 
     void enemyDead()
     {
+        aud.PlayOneShot(enemyDeathSound[Random.Range(0, enemyDeathSound.Length)], enemyDeathSoundVol);
         gameManager.instance.enemyDecrement();
 
         anim.SetBool("Dead", true);

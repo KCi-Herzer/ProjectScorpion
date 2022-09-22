@@ -28,7 +28,20 @@ public class enemyAI : MonoBehaviour, IDamageable
 
     [Header("----- Enemy Drops -----")]
     [Header("optional")]
-    [SerializeField] GameObject enemyDrop; 
+    [SerializeField] GameObject enemyDrop;
+
+    [Header("----- Audio -----")]
+
+    [SerializeField] AudioSource aud;
+
+    [SerializeField] AudioClip[] enemyDamageSound;
+    [Range(0, 1)] [SerializeField] float enemyDamageSoundVol;
+
+    [SerializeField] AudioClip[] enemyDeathSound;
+    [Range(0, 1)] [SerializeField] float enemyDeathSoundVol;
+
+    [SerializeField] AudioClip[] enemyAttackSound;
+    [Range(0, 1)] [SerializeField] float enemyAttackSoundVol;
 
     Vector3 playerDir;
     bool takingDamage;
@@ -156,6 +169,7 @@ public class enemyAI : MonoBehaviour, IDamageable
         takingDamage = true;
         rend.material.color = Color.red;
         agent.speed = 0;
+        aud.PlayOneShot(enemyDamageSound[Random.Range(0, enemyDamageSound.Length)], enemyDamageSoundVol);
         yield return new WaitForSeconds(0.1f);
         rend.material.color = Color.white;
         agent.speed = speedChase;
@@ -165,7 +179,7 @@ public class enemyAI : MonoBehaviour, IDamageable
     IEnumerator shoot()
     {
         isShooting = true;
-
+        aud.PlayOneShot(enemyAttackSound[Random.Range(0, enemyAttackSound.Length)], enemyAttackSoundVol);
         Instantiate(bullet, shootPos.position, transform.rotation);
 
         yield return new WaitForSeconds(shootRate);
@@ -244,7 +258,7 @@ public class enemyAI : MonoBehaviour, IDamageable
     void enemyDead()
     {
          gameManager.instance.enemyDecrement();
-
+        aud.PlayOneShot(enemyDeathSound[Random.Range(0, enemyDeathSound.Length)], enemyDeathSoundVol);
         anim.SetBool("Dead", true);
         agent.enabled = false;
 
