@@ -19,8 +19,8 @@ public class waveManager : MonoBehaviour
     [Range(0, 1)] [SerializeField] double rangeEnemyFreq;
     [Range(1, 20)] [SerializeField] int bossSpawnInterval; //What rounds do the bosses spawn on
     [SerializeField] int spawnTimer;
-    
 
+    [Header("-----Not used in editor-----")]
     public int currentWave;
 
     List<enemySpawner> spawners = new List<enemySpawner>();
