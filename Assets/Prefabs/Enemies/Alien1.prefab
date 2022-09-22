@@ -2312,7 +2312,7 @@ MonoBehaviour:
   viewAngle: 75
   headPosition: {fileID: 2632099088587366319}
   attackRange: 2
-  attackRate: 0.5
+  attackRate: 0.8
   meleeCube: {fileID: 1304199123426473368, guid: 8721495b9cacebd43be03dddf970dd15, type: 3}
   hitPos: {fileID: 5367069992790152472}
   enemyDrop: {fileID: 1095680379832393759, guid: 651cbee12cc54104692939ff668a0232, type: 3}

@@ -22,7 +22,7 @@ public class meleeEnemyAI : MonoBehaviour, IDamageable
 
     [Header("----- Weapon Stats -----")]
     [SerializeField] int attackRange;
-    [SerializeField] float attackRate;
+    [SerializeField] float attackRate; //0.8 works best for the animation
     [SerializeField] GameObject meleeCube;
     [SerializeField] Transform hitPos;
 
@@ -147,9 +147,9 @@ public class meleeEnemyAI : MonoBehaviour, IDamageable
     IEnumerator melee()
     {
         isMeleeing = true;
-
+        anim.SetTrigger("Attack");
         Instantiate(meleeCube, hitPos.position, transform.rotation);
-
+        Debug.Log("Test");
         yield return new WaitForSeconds(attackRate);
 
         isMeleeing = false;
