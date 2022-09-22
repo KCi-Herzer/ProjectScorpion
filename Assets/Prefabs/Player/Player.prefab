@@ -1763,6 +1763,15 @@ MonoBehaviour:
   weaponSwapSound:
   - {fileID: 8300000, guid: e5d65276b61858c49baeafe955362020, type: 3}
   weaponSwapSoundVol: 0.5
+  objDeadSound:
+  - {fileID: 8300000, guid: 1bf9d4737226dd04f87b52f8df81129d, type: 3}
+  objDeadSoundVol: 0.25
+  winSound:
+  - {fileID: 8300000, guid: 692bd2b35283cd04b85b3faeddbacb00, type: 3}
+  winSoundVol: 0.5
+  uiClickSound:
+  - {fileID: 8300000, guid: 4835e5d288155b34f978f08ce48d4d21, type: 3}
+  uiClickSoundVol: 0.5
   playerDamageFlashTime: 0.1
   isShooting: 0
   hasGun: 0

@@ -7,24 +7,21 @@ public class GameObjective : MonoBehaviour, IDamageable
     [Range(0, 100)] [SerializeField] int HP;
     [SerializeField] Renderer rend;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [Header("----- Audio -----")]
 
-    // Update is called once per frame
-    void Update()
-    {
-       
-    }
+    [SerializeField] AudioSource aud;
+
+    [SerializeField] AudioClip[] objDamageSound;
+    [Range(0, 1)] [SerializeField] float objDamageSoundVol;
 
     public void takeDamage(int dmg)
     {
+        aud.PlayOneShot(objDamageSound[Random.Range(0, objDamageSound.Length)], objDamageSoundVol);
         HP -= dmg;
         StartCoroutine(flashColor());
         if (HP <= 0)
         {
+            
             Destroy(gameObject);
             gameManager.instance.totalObjectives--;
             gameManager.instance.updateObjectiveUI();

@@ -113,6 +113,10 @@ public class gameManager : MonoBehaviour
     public void updateObjectiveUI()
     {
         gameManager.instance.gameObjectives.text = gameManager.instance.totalObjectives.ToString("F0");
+        if (gameManager.instance.totalObjectives != totalObjectives)
+        {
+            playerScript.aud.PlayOneShot(playerScript.objDeadSound[Random.Range(0, playerScript.objDeadSound.Length)], playerScript.objDeadSoundVol);
+        }
     }
 
     public IEnumerator countCurrentObjectives()
@@ -126,6 +130,7 @@ public class gameManager : MonoBehaviour
         if (totalObjectives <= 0)
         {
             menuCurrentlyOpen = winMenu;
+            playerScript.aud.PlayOneShot(playerScript.winSound[Random.Range(0, playerScript.winSound.Length)], playerScript.winSoundVol);
             menuCurrentlyOpen.SetActive(true);
             cursorLockPause();
         }

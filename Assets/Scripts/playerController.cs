@@ -29,7 +29,7 @@ public class playerController : MonoBehaviour, IDamageable
 
     [Header("----- Audio -----")]
 
-    [SerializeField] AudioSource aud;
+    public AudioSource aud;
 
     [Range(0, 1)] [SerializeField] float gunShootSoundVol;
     
@@ -50,6 +50,15 @@ public class playerController : MonoBehaviour, IDamageable
 
     [SerializeField] AudioClip[] weaponSwapSound;
     [Range(0, 1)] [SerializeField] float weaponSwapSoundVol;
+
+    public AudioClip[] objDeadSound;
+    [Range(0, 1)] public float objDeadSoundVol;
+
+    public AudioClip[] winSound;
+    [Range(0, 1)] public float winSoundVol;
+
+    public AudioClip[] uiClickSound;
+    [Range(0, 1)] public float uiClickSoundVol;
 
     [Header("-----UI Settings-----")]
     [SerializeField] float playerDamageFlashTime;
