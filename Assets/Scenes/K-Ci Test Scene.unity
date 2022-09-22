@@ -677,6 +677,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2129902370, guid: 6fbc139cca8daa34aad83c33f443ff61, type: 3}
+      propertyPath: rangeEnemyInitial
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3969364040949746088, guid: 6fbc139cca8daa34aad83c33f443ff61, type: 3}
       propertyPath: m_Name
       value: UI
@@ -1173,6 +1177,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1255620301084534110, guid: 0844c033ac9e30240b2bfef3440d459c, type: 3}
   m_PrefabInstance: {fileID: 1817018146}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1898395412 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1844340889907415554, guid: fe4cf2fcfaac1f3439b1e5002ddc3dbc, type: 3}
+  m_PrefabInstance: {fileID: 783794142378390999}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1927708530
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1448,6 +1457,28 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8819873859664847546, guid: fe4cf2fcfaac1f3439b1e5002ddc3dbc, type: 3}
   m_PrefabInstance: {fileID: 783794142378390999}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &783794142378391002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1898395412}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ecbf36dff21d7fe4a96f4db23b0feaac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meleeEnemy: {fileID: 0}
+  rangeEnemy: {fileID: 0}
+  bossEnemy: {fileID: 0}
+  meleeEnemyInitial: 0
+  rangeEnemyInitial: 0
+  meleeEnemyFreq: 0
+  rangeEnemyFreq: 0
+  bossSpawnInterval: 0
+  spawnTimer: 0
+  currentWave: 0
 --- !u!1001 &1095680381614251844
 PrefabInstance:
   m_ObjectHideFlags: 0
