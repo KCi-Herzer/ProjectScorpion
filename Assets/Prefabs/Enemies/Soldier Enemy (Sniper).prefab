@@ -456,7 +456,7 @@ Transform:
   m_GameObject: {fileID: 5309509022072468542}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 12.721533, y: 0.8124256, z: 14.212366}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5309509022072432746}
@@ -479,12 +479,12 @@ MonoBehaviour:
   agent: {fileID: 5309509022072432709}
   rend: {fileID: 5309509022075648330}
   anim: {fileID: 5309509022079846282}
-  HP: 50
+  HP: 150
   speedRoam: 0
   speedChase: 0
   playerFaceSpeed: 9
   roamRadius: 0
-  viewAngle: 45
+  viewAngle: 55
   headPosition: {fileID: 5309509022072468556}
   shootRate: 0.5
   bullet: {fileID: 1304199123426473368, guid: df7e7cfd6c3ddcb40a7ff9baccca6efa, type: 3}

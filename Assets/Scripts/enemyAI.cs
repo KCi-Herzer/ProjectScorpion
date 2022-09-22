@@ -11,7 +11,7 @@ public class enemyAI : MonoBehaviour, IDamageable
     [SerializeField] Animator anim;
 
     [Header("----- Enemy Stats -----")]
-    [Range(0, 100)] [SerializeField] int HP;
+    [Range(0, 1000)] [SerializeField] int HP;
     [Range(0, 10)] [SerializeField] float speedRoam;
     [Range(0, 10)] [SerializeField] float speedChase;
     [Range(0, 10)] [SerializeField] int playerFaceSpeed;
