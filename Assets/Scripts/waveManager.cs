@@ -72,6 +72,8 @@ public class waveManager : MonoBehaviour
     public void NextWave()
     {
         meleeEnemiesSpawned = 0;
+        rangeEnemiesSpawned = 0;
+        bossEnemiesSpawned = 0;
         currentWave++;
         gameManager.instance.waveCounter.text = currentWave.ToString("F0");
         //Calculate how many enemies will be in the wave
@@ -101,7 +103,7 @@ public class waveManager : MonoBehaviour
             //gameManager.instance.enemyCounter.text = gameManager.instance.enemyCount.ToString("F0");
             meleeEnemiesSpawned++; //Increments the count
             yield return new WaitForSeconds(spawnTimer);
-
+            //Debug.Log("Melee");
             selectedSpawn.isSpawning = false;
         }
     }
@@ -120,7 +122,7 @@ public class waveManager : MonoBehaviour
             //gameManager.instance.enemyCounter.text = gameManager.instance.enemyCount.ToString("F0");
             rangeEnemiesSpawned++; //Increments the count
             yield return new WaitForSeconds(spawnTimer);
-            Debug.Log("Ranged");
+            //Debug.Log("Ranged");
             selectedSpawn.isSpawning = false;
         }
     }
@@ -139,7 +141,7 @@ public class waveManager : MonoBehaviour
             //gameManager.instance.enemyCounter.text = gameManager.instance.enemyCount.ToString("F0");
             bossEnemiesSpawned++; //Increments the count
             yield return new WaitForSeconds(spawnTimer);
-            Debug.Log("Boss");
+            //Debug.Log("Boss");
             selectedSpawn.isSpawning = false;
         }
     }

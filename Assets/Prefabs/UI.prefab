@@ -593,7 +593,7 @@ MonoBehaviour:
   rangeEnemyInitial: 5
   meleeEnemyFreq: 0.10000000149011612
   rangeEnemyFreq: 0.10000000149011612
-  bossSpawnInterval: 3
+  bossSpawnInterval: 5
   spawnTimer: 3
   currentWave: 0
 --- !u!1 &78103182849632932
@@ -2859,6 +2859,7 @@ MonoBehaviour:
   enemyCounter: {fileID: 162103386}
   waveCounter: {fileID: 8458957562230251712}
   ammoCounter: {fileID: 1208516788}
+  timeBetweenRounds: 0
   enemyCount: 0
   isPaused: 0
 --- !u!1 &5438545136737136924

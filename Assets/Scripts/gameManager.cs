@@ -19,12 +19,11 @@ public class gameManager : MonoBehaviour
     public GameObject playerDeadMenu;
     public GameObject winMenu;
     public GameObject playerDamage;
-
     public Image HPBar;
     public TMP_Text enemyCounter;
     public TMP_Text waveCounter;
-
     public TMP_Text ammoCounter;
+    public int timeBetweenRounds;
 
     public int enemyCount;
 
@@ -122,7 +121,7 @@ public class gameManager : MonoBehaviour
     {
         if (enemyCount <= 0)
         {
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(timeBetweenRounds);
             //menuCurrentlyOpen = winMenu;
             //menuCurrentlyOpen.SetActive(true);
             //cursorLockPause();

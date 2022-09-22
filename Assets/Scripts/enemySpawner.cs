@@ -10,6 +10,7 @@ public class enemySpawner : MonoBehaviour
     [Header("-----Don't change in editor-----")]
     public bool isSpawning;
 
+#if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
         if (bossOK)
@@ -28,5 +29,5 @@ public class enemySpawner : MonoBehaviour
         Vector3 dir = transform.TransformDirection(Vector3.forward) * 3;
         Gizmos.DrawRay(transform.position, dir);
     }
-    
+#endif
 }
