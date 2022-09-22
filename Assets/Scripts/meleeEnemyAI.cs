@@ -149,7 +149,6 @@ public class meleeEnemyAI : MonoBehaviour, IDamageable
         isMeleeing = true;
         anim.SetTrigger("Attack");
         Instantiate(meleeCube, hitPos.position, transform.rotation);
-        Debug.Log("Test");
         yield return new WaitForSeconds(attackRate);
 
         isMeleeing = false;

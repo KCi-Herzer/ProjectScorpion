@@ -19,17 +19,16 @@ public class gameManager : MonoBehaviour
     public GameObject playerDeadMenu;
     public GameObject winMenu;
     public GameObject playerDamage;
-
     public Image HPBar;
     public TMP_Text enemyCounter;
     public TMP_Text waveCounter;
     public TMP_Text gameObjectives;
-
     public TMP_Text ammoCounter;
-
+    [Header("-----Game Settings-----")]
+    public int timeBetweenRounds;
+    [Header("-----Not used in editor-----")]
     public int enemyCount;
     public int totalObjectives;
-
     public bool isPaused;
     float timeScaleOrig;
 
@@ -136,7 +135,7 @@ public class gameManager : MonoBehaviour
     {
         if (enemyCount <= 0)
         {
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(timeBetweenRounds);
             //menuCurrentlyOpen = winMenu;
             //menuCurrentlyOpen.SetActive(true);
             //cursorLockPause();

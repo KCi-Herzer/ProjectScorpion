@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 100
-  totalObjectives: 4
+  rend: {fileID: 1003185991671726405}
 --- !u!33 &1003185991671726404
 MeshFilter:
   m_ObjectHideFlags: 0

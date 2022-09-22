@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameObjective : MonoBehaviour, IDamageable
 {
     [Range(0, 100)] [SerializeField] int HP;
-
+    [SerializeField] Renderer rend;
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +22,7 @@ public class GameObjective : MonoBehaviour, IDamageable
     public void takeDamage(int dmg)
     {
         HP -= dmg;
-
+        StartCoroutine(flashColor());
         if (HP <= 0)
         {
             Destroy(gameObject);
@@ -31,5 +31,11 @@ public class GameObjective : MonoBehaviour, IDamageable
         }
     }
 
-   
+    IEnumerator flashColor()
+    {
+        rend.material.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        rend.material.color = Color.white;
+    }
+
 }
