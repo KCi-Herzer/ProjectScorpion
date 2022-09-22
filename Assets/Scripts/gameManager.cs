@@ -19,13 +19,16 @@ public class gameManager : MonoBehaviour
     public GameObject playerDeadMenu;
     public GameObject winMenu;
     public GameObject playerDamage;
+
     public Image HPBar;
     public TMP_Text enemyCounter;
     public TMP_Text waveCounter;
+    public TMP_Text gameObjectives;
+
     public TMP_Text ammoCounter;
-    public int timeBetweenRounds;
 
     public int enemyCount;
+    public int totalObjectives;
 
     public bool isPaused;
     float timeScaleOrig;
@@ -42,6 +45,9 @@ public class gameManager : MonoBehaviour
         playerSpawnPos = GameObject.Find("Player Spawn Pos");
 
         timeScaleOrig = Time.timeScale;
+
+        updateObjectiveUI();
+        
         //countCurrentEnemies(0);
     }
 
@@ -53,12 +59,12 @@ public class gameManager : MonoBehaviour
             isPaused = !isPaused;
             menuCurrentlyOpen = pauseMenu;
             menuCurrentlyOpen.SetActive(isPaused);
-
             if (isPaused)
                 cursorLockPause();
             else
                 cursorUnlockUnpause();
         }
+        StartCoroutine(countCurrentObjectives());
     }
 
     public void cursorLockPause()
@@ -91,7 +97,6 @@ public class gameManager : MonoBehaviour
         {
             enemy.playerDied();
         }
-        
     }
 
     public void enemyDecrement()
@@ -106,14 +111,24 @@ public class gameManager : MonoBehaviour
         enemyCount++;
         enemyCounter.text = enemyCount.ToString("F0");
     }
+    public void updateObjectiveUI()
+    {
+        gameManager.instance.gameObjectives.text = gameManager.instance.totalObjectives.ToString("F0");
+    }
 
-    public void countCurrentEnemies(int amount)
+    public IEnumerator countCurrentObjectives()
     {
         //foreach (enemyAI enemy in currentEnemys)
-        foreach (enemyAI enemy in GetComponents<enemyAI>())
+        //foreach (GameObjective gameObjective in GetComponents<GameObjective>())
+        
+
+        yield return new WaitForSeconds(2);
+        
+        if (totalObjectives <= 0)
         {
-            enemyCount += amount;
-            enemyCounter.text = enemyCount.ToString("F0");
+            menuCurrentlyOpen = winMenu;
+            menuCurrentlyOpen.SetActive(true);
+            cursorLockPause();
         }
     }
 
@@ -121,14 +136,13 @@ public class gameManager : MonoBehaviour
     {
         if (enemyCount <= 0)
         {
-            yield return new WaitForSeconds(timeBetweenRounds);
+            yield return new WaitForSeconds(2);
             //menuCurrentlyOpen = winMenu;
             //menuCurrentlyOpen.SetActive(true);
             //cursorLockPause();
 
             //The game manager tell the waveManager to start the next round
             waveManager.instance.NextWave();
-            
         }
     }
 }
