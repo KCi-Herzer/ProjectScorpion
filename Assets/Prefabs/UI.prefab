@@ -587,15 +587,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meleeEnemy: {fileID: 2632099088587457815, guid: 6f685d6ebbf0c04418b15fb68d3750e3, type: 3}
-  rangeEnemy: {fileID: 5309509022072468542, guid: 8ed4ba443e5fe5c47b016cfdbfb03519, type: 3}
-  bossEnemy: {fileID: 0}
+  rangeEnemy: {fileID: 2632099088587457815, guid: 6f685d6ebbf0c04418b15fb68d3750e3, type: 3}
+  bossEnemy: {fileID: 5309509022072468542, guid: c7046c86cd000a54eb5c2fab7f245ed3, type: 3}
   meleeEnemyInitial: 5
-  rangeEnemyInitial: 0
-  meleeEnemyFreq: 0.5
+  rangeEnemyInitial: 5
+  meleeEnemyFreq: 0.10000000149011612
   rangeEnemyFreq: 0.10000000149011612
-  bossSpawnInterval: 5
+  bossSpawnInterval: 3
   spawnTimer: 3
-  currentWave: 0
+  currentWave: 2
 --- !u!1 &78103182849632932
 GameObject:
   m_ObjectHideFlags: 0

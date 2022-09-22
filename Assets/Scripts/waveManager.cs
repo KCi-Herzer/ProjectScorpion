@@ -59,7 +59,14 @@ public class waveManager : MonoBehaviour
         {
             StartCoroutine(spawnMelee());
         }
-        //Checks to see if all enemies are dead
+        if (rangeEnemiesSpawned < rangeEnemyMax)
+        {
+            StartCoroutine(spawnRanged());
+        }
+        if (bossEnemiesSpawned < bossEnemyMax)
+        {
+            StartCoroutine(spawnBoss());
+        }
     }
 
     public void NextWave()
@@ -79,11 +86,13 @@ public class waveManager : MonoBehaviour
 
     }
 
+    //I'm sure theres a way to make the IEnumerators below combine to one but I haven't gotten around to doing this yet either
+
     IEnumerator spawnMelee()
     {
         //Pick a random spawn
         enemySpawner selectedSpawn = spawners[Random.Range(0, spawners.Count)];
-        if (!selectedSpawn.isSpawning && meleeEnemiesSpawned < meleeEnemyMax) //Checks to see if spawner is currently in use
+        if (!selectedSpawn.isSpawning && meleeEnemiesSpawned < meleeEnemyMax && !selectedSpawn.rangedOnly) //Checks to see if spawner is currently in use
         {
             selectedSpawn.isSpawning = true;
             //gameManager.instance.enemyCount++;
@@ -99,36 +108,38 @@ public class waveManager : MonoBehaviour
 
     IEnumerator spawnRanged()
     {
+        
         //Pick a random spawn
         enemySpawner selectedSpawn = spawners[Random.Range(0, spawners.Count)];
-        if (!selectedSpawn.isSpawning && meleeEnemiesSpawned < meleeEnemyMax) //Checks to see if spawner is currently in use
+        if (!selectedSpawn.isSpawning && rangeEnemiesSpawned < rangeEnemyMax && selectedSpawn.rangedOnly) //Checks to see if spawner is currently in use
         {
             selectedSpawn.isSpawning = true;
             //gameManager.instance.enemyCount++;
 
-            Instantiate(meleeEnemy, selectedSpawn.transform.position, meleeEnemy.transform.rotation);
+            Instantiate(rangeEnemy, selectedSpawn.transform.position, rangeEnemy.transform.rotation);
             //gameManager.instance.enemyCounter.text = gameManager.instance.enemyCount.ToString("F0");
-            meleeEnemiesSpawned++; //Increments the count
+            rangeEnemiesSpawned++; //Increments the count
             yield return new WaitForSeconds(spawnTimer);
-
+            Debug.Log("Ranged");
             selectedSpawn.isSpawning = false;
         }
     }
 
     IEnumerator spawnBoss()
     {
+        
         //Pick a random spawn
         enemySpawner selectedSpawn = spawners[Random.Range(0, spawners.Count)];
-        if (!selectedSpawn.isSpawning && meleeEnemiesSpawned < meleeEnemyMax) //Checks to see if spawner is currently in use
+        if (!selectedSpawn.isSpawning && bossEnemiesSpawned < bossEnemyMax && selectedSpawn.bossOK) //Checks to see if spawner is currently in use
         {
             selectedSpawn.isSpawning = true;
             //gameManager.instance.enemyCount++;
 
-            Instantiate(meleeEnemy, selectedSpawn.transform.position, meleeEnemy.transform.rotation);
+            Instantiate(bossEnemy, selectedSpawn.transform.position, bossEnemy.transform.rotation);
             //gameManager.instance.enemyCounter.text = gameManager.instance.enemyCount.ToString("F0");
-            meleeEnemiesSpawned++; //Increments the count
+            bossEnemiesSpawned++; //Increments the count
             yield return new WaitForSeconds(spawnTimer);
-
+            Debug.Log("Boss");
             selectedSpawn.isSpawning = false;
         }
     }
