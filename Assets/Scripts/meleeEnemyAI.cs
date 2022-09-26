@@ -60,6 +60,7 @@ public class meleeEnemyAI : MonoBehaviour, IDamageable
         stoppingDistOrig = agent.stoppingDistance;
         speedRoam = agent.speed;
         startingPos = transform.position;
+        agent.SetDestination(gameManager.instance.player.transform.position);
     }
 
     // Update is called once per frame
@@ -69,16 +70,18 @@ public class meleeEnemyAI : MonoBehaviour, IDamageable
         {
             playerDir = gameManager.instance.player.transform.position - headPosition.transform.position;
             anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agent.velocity.normalized.magnitude, Time.deltaTime * 4));
+            agent.SetDestination(gameManager.instance.player.transform.position);
 
+            rayToPlayer();
+            /*
             if (!takingDamage)
             {
                 if (playerIsSeen)
-                    rayToPlayer();
                 
 
                 if (agent.remainingDistance < 0.001f && agent.destination != gameManager.instance.player.transform.position)
                     roam();
-            }
+            }*/
         }
     }
 
@@ -181,7 +184,7 @@ public class meleeEnemyAI : MonoBehaviour, IDamageable
             Debug.DrawRay(headPosition.transform.position, playerDir);
 #endif
             agent.speed = speedChase;
-            if (hit.collider.CompareTag("Player") && angle <= viewAngle)
+            if (hit.collider.CompareTag("Player"))
             {
                 hasSeen = true;
                 lastPlayerPos = gameManager.instance.player.transform.position;
@@ -218,10 +221,10 @@ public class meleeEnemyAI : MonoBehaviour, IDamageable
     public void playerDied()
     {
         //Added to fix bug: OnCollisionExit not being called when player dies
-
-        playerIsSeen = false;
-        agent.stoppingDistance = 0;
-        roam();
+        agent.SetDestination(gameManager.instance.player.transform.position);
+        //playerIsSeen = false;
+        //agent.stoppingDistance = 0;
+        //roam();
     }
 
     void enemyDead()

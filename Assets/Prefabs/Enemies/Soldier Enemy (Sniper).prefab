@@ -479,11 +479,11 @@ MonoBehaviour:
   agent: {fileID: 5309509022072432709}
   rend: {fileID: 5309509022075648330}
   anim: {fileID: 5309509022079846282}
-  HP: 150
-  speedRoam: 0
-  speedChase: 0
+  HP: 250
+  speedRoam: 10
+  speedChase: 10
   playerFaceSpeed: 9
-  roamRadius: 0
+  roamRadius: 35
   viewAngle: 55
   headPosition: {fileID: 5309509022072468556}
   shootRate: 0.5

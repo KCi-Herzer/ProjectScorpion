@@ -65,6 +65,7 @@ public class enemyAI : MonoBehaviour, IDamageable
         speedRoam = agent.speed;
         //speedOrig = agent.speed;
         startingPos = transform.position;
+        agent.SetDestination(gameManager.instance.player.transform.position);
     }
 
     void Update()
@@ -73,21 +74,21 @@ public class enemyAI : MonoBehaviour, IDamageable
         {
             playerDir = gameManager.instance.player.transform.position - headPosition.transform.position;
             anim.SetFloat("Speed", Mathf.Lerp(anim.GetFloat("Speed"), agent.velocity.normalized.magnitude, Time.deltaTime * 4));
-
-            if (!takingDamage)
+            //agent.SetDestination(gameManager.instance.player.transform.position);
+            rayToPlayer();
+            //if (!takingDamage)
             {
-                if (playerIsSeen)
+                //if (playerIsSeen)
                 {
                     //if(angle > viewAngle && agent.stoppingDistance != 0) // Student's code from class
                     //facePlayer();
 
-                    rayToPlayer();
-
+                    //agent.SetDestination(gameManager.instance.player.transform.position);
                 }
 
-                if (agent.remainingDistance < 0.001f && agent.destination != gameManager.instance.player.transform.position)
+                //if (agent.remainingDistance < 0.001f && agent.destination != gameManager.instance.player.transform.position)
                 {
-                    roam();
+                    //roam();
                     //agent.SetDestination(lastPlayerPos);
                     //agent.stoppingDistance = 0;
                 }
@@ -197,7 +198,7 @@ public class enemyAI : MonoBehaviour, IDamageable
             Debug.DrawRay(headPosition.transform.position, playerDir);
 #endif
             agent.speed = speedChase;
-            if (hit.collider.CompareTag("Player") && angle <= viewAngle)
+            if (hit.collider.CompareTag("Player"))
             {
                 hasSeen = true;
                 lastPlayerPos = gameManager.instance.player.transform.position;
@@ -206,21 +207,6 @@ public class enemyAI : MonoBehaviour, IDamageable
                 agent.stoppingDistance = stoppingDistOrig;
 
                 facePlayer();
-                //if (agent.stoppingDistance >= agent.remainingDistance) //Changed <= to >=
-                //if (agent.remainingDistance <= agent.stoppingDistance)
-                    
-
-                //If the player gets too close to the enemy the enemy backs away
-
-                /*if(agent.remainingDistance < agent.stoppingDistance * .75) 
-                {
-                    NavMeshHit Hit;
-                    NavMesh.SamplePosition(playerDir * -1, out Hit, 1, 1);
-                    NavMeshPath path = new NavMeshPath();
-
-                    agent.CalculatePath(Hit.position, path);
-                    agent.SetPath(path);
-                }*/
 
                 //if not already shooting and the remaing distance from the player is less than or equal to the shoot 
                 //Distance of the enemy then open fire.
@@ -249,10 +235,10 @@ public class enemyAI : MonoBehaviour, IDamageable
     public void playerDied()
     {
         //Added to fix bug: OnCollisionExit not being called when player dies
-
-        playerIsSeen = false;
-        agent.stoppingDistance = 0;
-        roam();
+        agent.SetDestination(gameManager.instance.player.transform.position);
+        //playerIsSeen = false;
+        //agent.stoppingDistance = 0;
+        //roam();
     }
 
     void enemyDead()
